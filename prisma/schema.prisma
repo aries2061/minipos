@@ -7,9 +7,9 @@ datasource db {
 }
 
 model AllowedEmail {
-  id    String @id @default(cuid())
+  id    Int    @id @default(autoincrement())
   email String @unique
-  role  String @default("staff") // "owner" or "staff"
+  role  String @default("staff")
 }
 
 model User {
@@ -19,9 +19,9 @@ model User {
   image         String?
   role          String    @default("staff")
   emailVerified DateTime?
+  createdAt     DateTime  @default(now())
   accounts      Account[]
   sessions      Session[]
-  createdAt     DateTime  @default(now())
 }
 
 model Account {
@@ -30,12 +30,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -58,22 +58,22 @@ model Item {
   salePrice Float
   stock     Int
   sku       String?    @unique
-  sales     SaleItem[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  sales     SaleItem[]
 }
 
 model Sale {
   id          String     @id @default(cuid())
   totalAmount Float
   costTotal   Float      @default(0)
-  paymentMode String     @default("cash") // "cash", "digital", "debt"
+  paymentMode String     @default("cash")
   isDebt      Boolean    @default(false)
   debtorName  String?
   isPaid      Boolean    @default(false)
   paidAt      DateTime?
-  items       SaleItem[]
   createdAt   DateTime   @default(now())
+  items       SaleItem[]
 }
 
 model SaleItem {
@@ -83,6 +83,6 @@ model SaleItem {
   quantity  Int
   price     Float
   costPrice Float  @default(0)
-  sale      Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade)
   item      Item   @relation(fields: [itemId], references: [id])
+  sale      Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade)
 }
