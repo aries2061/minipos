@@ -6,6 +6,7 @@ import { Item } from '@prisma/client';
 import { createSale } from '@/actions/sales';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 import type { CartItem } from '@/types';
 
 interface CartProps {
@@ -21,6 +22,7 @@ export default function Cart({ items }: CartProps) {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   const filteredItems = items.filter(
     (i) =>
@@ -122,7 +124,7 @@ export default function Cart({ items }: CartProps) {
                 <Text fontSize="xs" color="gray.500">{item.category}</Text>
               </Box>
               <HStack gap={3}>
-                <Text fontSize="sm" fontWeight="semibold">{formatCurrency(item.salePrice)}</Text>
+                <Text fontSize="sm" fontWeight="semibold">{formatCurrency(item.salePrice, settings.currency)}</Text>
                 <Badge colorScheme={item.stock <= 5 ? 'red' : 'green'} fontSize="xs">
                   {t('sales.stock')}: {item.stock}
                 </Badge>
@@ -145,14 +147,14 @@ export default function Cart({ items }: CartProps) {
               <Flex key={c.id} justify="space-between" align="center" py={1}>
                 <Box>
                   <Text fontSize="sm">{c.name}</Text>
-                  <Text fontSize="xs" color="gray.500">{formatCurrency(c.salePrice)} {t('sales.each')}</Text>
+                  <Text fontSize="xs" color="gray.500">{formatCurrency(c.salePrice, settings.currency)} </Text>
                 </Box>
                 <HStack gap={2}>
                   <Button size="xs" onClick={() => updateQuantity(c.id, c.quantity - 1)}>-</Button>
                   <Text fontSize="sm" w="24px" textAlign="center">{c.quantity}</Text>
                   <Button size="xs" onClick={() => updateQuantity(c.id, c.quantity + 1)}>+</Button>
                   <Text fontSize="sm" fontWeight="medium" w="60px" textAlign="right">
-                    {formatCurrency(c.salePrice * c.quantity)}
+                    {formatCurrency(c.salePrice * c.quantity, settings.currency)}
                   </Text>
                 </HStack>
               </Flex>
@@ -163,7 +165,7 @@ export default function Cart({ items }: CartProps) {
         <Box borderTop="1px solid" borderColor="gray.200" pt={4}>
           <Flex justify="space-between" mb={4}>
             <Text fontWeight="semibold">{t('sales.total')}</Text>
-            <Text fontWeight="bold" fontSize="lg">{formatCurrency(total)}</Text>
+            <Text fontWeight="bold" fontSize="lg">{formatCurrency(total, settings.currency)}</Text>
           </Flex>
 
           <Text fontSize="sm" mb={2}>{t('sales.paymentMode')}</Text>

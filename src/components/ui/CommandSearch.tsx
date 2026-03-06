@@ -19,6 +19,7 @@ const pageConfigs = [
   { labelKey: 'nav.customers' as TranslationKey, href: '/customers' },
   { labelKey: 'nav.analytics' as TranslationKey, href: '/analytics' },
   { labelKey: 'nav.debts' as TranslationKey, href: '/debts' },
+  { labelKey: 'nav.settings' as TranslationKey, href: '/settings' },
 ];
 
 interface CommandSearchProps {

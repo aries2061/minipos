@@ -5,6 +5,7 @@ import DataTable from '@/components/ui/DataTable';
 import { formatCurrency } from '@/lib/utils';
 import { format } from 'date-fns';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 
 interface SaleWithItems {
   id: string;
@@ -29,6 +30,7 @@ interface SalesListProps {
 
 export default function SalesList({ sales }: SalesListProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
   const paymentLabels: Record<string, string> = { cash: t('sales.cash'), digital: t('sales.digital'), debt: t('sales.debt') };
 
   const columns = [
@@ -46,7 +48,7 @@ export default function SalesList({ sales }: SalesListProps) {
     },
     {
       header: t('table.total'),
-      accessor: (row: SaleWithItems) => formatCurrency(row.totalAmount),
+      accessor: (row: SaleWithItems) => formatCurrency(row.totalAmount, settings.currency),
     },
     {
       header: t('table.payment'),

@@ -3,7 +3,7 @@
 import { Box, VStack, Text, Flex, Icon } from '@chakra-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiHome, FiPackage, FiShoppingCart, FiBarChart2, FiDollarSign, FiUsers } from 'react-icons/fi';
+import { FiHome, FiPackage, FiShoppingCart, FiBarChart2, FiDollarSign, FiUsers, FiSettings } from 'react-icons/fi';
 import { useTranslation } from '@/lib/i18n';
 import type { TranslationKey } from '@/lib/i18n/translations/en';
 
@@ -14,6 +14,7 @@ const navItems = [
   { labelKey: 'nav.customers' as TranslationKey, href: '/customers', icon: FiUsers },
   { labelKey: 'nav.analytics' as TranslationKey, href: '/analytics', icon: FiBarChart2 },
   { labelKey: 'nav.debts' as TranslationKey, href: '/debts', icon: FiDollarSign },
+  { labelKey: 'nav.settings' as TranslationKey, href: '/settings', icon: FiSettings },
 ];
 
 export default function Sidebar() {
@@ -47,8 +48,8 @@ export default function Sidebar() {
                 px={3}
                 py={2}
                 borderRadius="md"
-                bg={isActive ? 'blue.600' : 'transparent'}
-                _hover={{ bg: isActive ? 'blue.600' : 'gray.700' }}
+                bg={isActive ? 'var(--minipos-primary, #3182CE)' : 'transparent'}
+                _hover={{ bg: isActive ? 'var(--minipos-primary, #3182CE)' : 'gray.700' }}
                 cursor="pointer"
               >
                 <Icon as={item.icon} boxSize={5} />

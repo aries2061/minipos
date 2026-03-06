@@ -135,6 +135,21 @@ const th: Record<string, string> = {
   'debts.markPaid': 'ทำเครื่องหมายชำระแล้ว',
   'debts.markPaidConfirm': 'ทำเครื่องหมายหนี้นี้ว่าชำระแล้ว?',
   'debts.paid': 'ชำระแล้ว',
+
+  // Settings
+  'nav.settings': 'ตั้งค่า',
+  'settings.title': 'ตั้งค่า',
+  'settings.language': 'ภาษาเริ่มต้น',
+  'settings.languageDesc': 'ตั้งค่าภาษาเริ่มต้นของเว็บไซต์',
+  'settings.currency': 'สกุลเงิน',
+  'settings.currencyDesc': 'ตั้งค่าสกุลเงินเริ่มต้นสำหรับราคา',
+  'settings.theme': 'สีธีม',
+  'settings.themeDesc': 'ปรับแต่งโทนสีของแอป',
+  'settings.primaryColor': 'สีหลัก',
+  'settings.secondaryColor': 'สีรอง',
+  'settings.textColor': 'สีตัวอักษร',
+  'settings.saved': 'บันทึกการตั้งค่าแล้ว',
+  'settings.resetTheme': 'รีเซ็ตเป็นค่าเริ่มต้น',
 };
 
 export default th;

@@ -3,6 +3,7 @@
 import { Box, Text, Flex, Badge } from '@chakra-ui/react';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 import type { PopularItem } from '@/types';
 
 interface PopularItemsProps {
@@ -11,6 +12,7 @@ interface PopularItemsProps {
 
 export default function PopularItems({ items }: PopularItemsProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
   if (items.length === 0) {
     return (
       <Box bg="white" p={6} borderRadius="lg" border="1px solid" borderColor="gray.200">
@@ -42,7 +44,7 @@ export default function PopularItems({ items }: PopularItemsProps) {
           </Flex>
           <Flex gap={4} align="center">
             <Text fontSize="xs" color="gray.500">{item.totalQuantity} {t('analytics.sold')}</Text>
-            <Text fontSize="sm" fontWeight="medium">{formatCurrency(item.totalRevenue)}</Text>
+            <Text fontSize="sm" fontWeight="medium">{formatCurrency(item.totalRevenue, settings.currency)}</Text>
           </Flex>
         </Flex>
       ))}

@@ -135,6 +135,21 @@ const en = {
   'debts.markPaid': 'Mark Paid',
   'debts.markPaidConfirm': 'Mark this debt as paid?',
   'debts.paid': 'Paid',
+
+  // Settings
+  'nav.settings': 'Settings',
+  'settings.title': 'Settings',
+  'settings.language': 'Default Language',
+  'settings.languageDesc': 'Set the default language for the site',
+  'settings.currency': 'Currency',
+  'settings.currencyDesc': 'Set the default currency for prices',
+  'settings.theme': 'Theme Colors',
+  'settings.themeDesc': 'Customize the app color scheme',
+  'settings.primaryColor': 'Primary Color',
+  'settings.secondaryColor': 'Secondary Color',
+  'settings.textColor': 'Text Color',
+  'settings.saved': 'Settings saved',
+  'settings.resetTheme': 'Reset to Default',
 } as const;
 
 export type TranslationKey = keyof typeof en;

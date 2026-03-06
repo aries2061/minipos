@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Box, Text, Flex, Badge, Button, VStack, HStack } from '@chakra-ui/react';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 import DebtDetail from './DebtDetail';
 
 interface SaleWithItems {
@@ -37,6 +38,7 @@ interface DebtorListProps {
 export default function DebtorList({ debtors }: DebtorListProps) {
   const [expandedDebtor, setExpandedDebtor] = useState<string | null>(null);
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   const totalOutstanding = debtors.reduce((sum, d) => sum + d.outstandingBalance, 0);
   const totalDebtorsCount = debtors.filter((d) => d.outstandingBalance > 0).length;
@@ -56,7 +58,7 @@ export default function DebtorList({ debtors }: DebtorListProps) {
           {t('debts.activeDebtors')} <Text as="span" fontWeight="bold">{totalDebtorsCount}</Text>
         </Text>
         <Text fontSize="sm" color="gray.600">
-          {t('debts.totalOutstanding')} <Text as="span" fontWeight="bold" color="red.600">{formatCurrency(totalOutstanding)}</Text>
+          {t('debts.totalOutstanding')} <Text as="span" fontWeight="bold" color="red.600">{formatCurrency(totalOutstanding, settings.currency)}</Text>
         </Text>
       </HStack>
       {debtors.map((debtor) => (
@@ -77,7 +79,7 @@ export default function DebtorList({ debtors }: DebtorListProps) {
               <Box textAlign="right">
                 <Text fontSize="xs" color="gray.500">{t('debts.outstanding')}</Text>
                 <Text fontWeight="bold" color={debtor.outstandingBalance > 0 ? 'red.600' : 'green.600'}>
-                  {formatCurrency(debtor.outstandingBalance)}
+                  {formatCurrency(debtor.outstandingBalance, settings.currency)}
                 </Text>
               </Box>
               <Badge colorScheme={debtor.outstandingBalance > 0 ? 'red' : 'green'}>

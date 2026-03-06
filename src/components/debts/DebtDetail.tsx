@@ -4,6 +4,7 @@ import { Box, Text, Flex, Badge, VStack } from '@chakra-ui/react';
 import { formatCurrency } from '@/lib/utils';
 import { format } from 'date-fns';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 import SettleDebtButton from './SettleDebtButton';
 
 interface SaleWithItems {
@@ -27,6 +28,7 @@ interface DebtDetailProps {
 
 export default function DebtDetail({ sales }: DebtDetailProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
   return (
     <VStack gap={3} align="stretch">
       {sales.map((sale) => (
@@ -41,7 +43,7 @@ export default function DebtDetail({ sales }: DebtDetailProps) {
               </Text>
             </Box>
             <Flex gap={3} align="center">
-              <Text fontWeight="semibold" fontSize="sm">{formatCurrency(sale.totalAmount)}</Text>
+              <Text fontWeight="semibold" fontSize="sm">{formatCurrency(sale.totalAmount, settings.currency)}</Text>
               {sale.isPaid ? (
                 <Badge colorScheme="green">
                   {t('debts.paid')} {sale.paidAt && format(new Date(sale.paidAt), 'MMM dd')}

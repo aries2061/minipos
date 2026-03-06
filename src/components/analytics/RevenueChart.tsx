@@ -3,6 +3,7 @@
 import { Box, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
 import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface RevenueChartProps {
@@ -14,12 +15,13 @@ interface RevenueChartProps {
 
 export default function RevenueChart({ grossRevenue, netProfit, totalSales, costTotal }: RevenueChartProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
   const profitMargin = grossRevenue > 0 ? ((netProfit / grossRevenue) * 100).toFixed(1) : '0.0';
 
   const stats: { labelKey: TranslationKey; value: string; color: string }[] = [
-    { labelKey: 'analytics.grossRevenue', value: formatCurrency(grossRevenue), color: 'blue.600' },
-    { labelKey: 'analytics.totalCost', value: formatCurrency(costTotal), color: 'orange.600' },
-    { labelKey: 'analytics.netProfit', value: formatCurrency(netProfit), color: 'green.600' },
+    { labelKey: 'analytics.grossRevenue', value: formatCurrency(grossRevenue, settings.currency), color: 'blue.600' },
+    { labelKey: 'analytics.totalCost', value: formatCurrency(costTotal, settings.currency), color: 'orange.600' },
+    { labelKey: 'analytics.netProfit', value: formatCurrency(netProfit, settings.currency), color: 'green.600' },
     { labelKey: 'analytics.totalSales', value: totalSales.toString(), color: 'purple.600' },
     { labelKey: 'analytics.profitMargin', value: `${profitMargin}%`, color: 'teal.600' },
   ];

@@ -3,6 +3,7 @@
 import { Box, Heading, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { useTranslation } from '@/lib/i18n';
 import { formatCurrency } from '@/lib/utils';
+import { useSettings } from '@/lib/settings';
 import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface DashboardContentProps {
@@ -18,14 +19,15 @@ interface DashboardContentProps {
 
 export default function DashboardContent({ data }: DashboardContentProps) {
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   const stats: { labelKey: TranslationKey; value: string }[] = [
     { labelKey: 'dashboard.totalItems', value: data.itemCount.toString() },
     { labelKey: 'dashboard.todaySales', value: data.todaySalesCount.toString() },
-    { labelKey: 'dashboard.todayRevenue', value: formatCurrency(data.todayRevenue) },
-    { labelKey: 'dashboard.todayProfit', value: formatCurrency(data.todayProfit) },
+    { labelKey: 'dashboard.todayRevenue', value: formatCurrency(data.todayRevenue, settings.currency) },
+    { labelKey: 'dashboard.todayProfit', value: formatCurrency(data.todayProfit, settings.currency) },
     { labelKey: 'dashboard.lowStockItems', value: data.lowStockItems.toString() },
-    { labelKey: 'dashboard.outstandingDebt', value: formatCurrency(data.outstandingDebt) },
+    { labelKey: 'dashboard.outstandingDebt', value: formatCurrency(data.outstandingDebt, settings.currency) },
   ];
 
   return (

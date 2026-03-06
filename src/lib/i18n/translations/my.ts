@@ -135,6 +135,21 @@ const my: Record<string, string> = {
   'debts.markPaid': 'ပေးပြီးမှတ်ရန်',
   'debts.markPaidConfirm': 'ဤအကြွေးကိုပေးပြီးဟုမှတ်မလား?',
   'debts.paid': 'ပေးပြီး',
+
+  // Settings
+  'nav.settings': 'ဆက်တင်',
+  'settings.title': 'ဆက်တင်',
+  'settings.language': 'မူရင်းဘာသာစကား',
+  'settings.languageDesc': 'ဆိုက်၏မူရင်းဘာသာစကားသတ်မှတ်ရန်',
+  'settings.currency': 'ငွေကြေးအမျိုးအစား',
+  'settings.currencyDesc': 'ဈေးနှုန်းများအတွက်မူရင်းငွေကြေးသတ်မှတ်ရန်',
+  'settings.theme': 'အရောင်အသွေး',
+  'settings.themeDesc': 'အက်ပ်အရောင်အစီအစဉ်ကိုစိတ်ကြိုက်ပြင်ဆင်ရန်',
+  'settings.primaryColor': 'အဓိကအရောင်',
+  'settings.secondaryColor': 'ဒုတိယအရောင်',
+  'settings.textColor': 'စာသားအရောင်',
+  'settings.saved': 'ဆက်တင်သိမ်းပြီး',
+  'settings.resetTheme': 'မူရင်းသို့ပြန်ရန်',
 };
 
 export default my;
