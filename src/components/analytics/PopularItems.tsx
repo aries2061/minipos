@@ -2,6 +2,7 @@
 
 import { Box, Text, Flex, Badge } from '@chakra-ui/react';
 import { formatCurrency } from '@/lib/utils';
+import { useTranslation } from '@/lib/i18n';
 import type { PopularItem } from '@/types';
 
 interface PopularItemsProps {
@@ -9,10 +10,11 @@ interface PopularItemsProps {
 }
 
 export default function PopularItems({ items }: PopularItemsProps) {
+  const { t } = useTranslation();
   if (items.length === 0) {
     return (
       <Box bg="white" p={6} borderRadius="lg" border="1px solid" borderColor="gray.200">
-        <Text color="gray.500" textAlign="center">No sales data for this period</Text>
+        <Text color="gray.500" textAlign="center">{t('analytics.noSalesData')}</Text>
       </Box>
     );
   }
@@ -20,7 +22,7 @@ export default function PopularItems({ items }: PopularItemsProps) {
   return (
     <Box bg="white" borderRadius="lg" border="1px solid" borderColor="gray.200" overflow="hidden">
       <Box px={4} py={3} bg="gray.50" borderBottom="1px solid" borderColor="gray.200">
-        <Text fontWeight="semibold" fontSize="sm">Most Sold Items</Text>
+        <Text fontWeight="semibold" fontSize="sm">{t('analytics.mostSoldItems')}</Text>
       </Box>
       {items.map((item, i) => (
         <Flex
@@ -39,7 +41,7 @@ export default function PopularItems({ items }: PopularItemsProps) {
             <Text fontSize="sm">{item.itemName}</Text>
           </Flex>
           <Flex gap={4} align="center">
-            <Text fontSize="xs" color="gray.500">{item.totalQuantity} sold</Text>
+            <Text fontSize="xs" color="gray.500">{item.totalQuantity} {t('analytics.sold')}</Text>
             <Text fontSize="sm" fontWeight="medium">{formatCurrency(item.totalRevenue)}</Text>
           </Flex>
         </Flex>

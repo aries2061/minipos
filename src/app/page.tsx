@@ -1,9 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { prisma } from '@/lib/prisma';
-import { Box, Heading, SimpleGrid, Text, VStack } from '@chakra-ui/react';
-import { formatCurrency } from '@/lib/utils';
 import { startOfDay, endOfDay } from 'date-fns';
+import DashboardContent from '@/components/dashboard/DashboardContent';
 
 async function getDashboardData() {
   const today = new Date();
@@ -41,39 +40,5 @@ async function getDashboardData() {
 
 export default async function DashboardPage() {
   const data = await getDashboardData();
-
-  const stats = [
-    { label: 'Total Items', value: data.itemCount.toString() },
-    { label: "Today's Sales", value: data.todaySalesCount.toString() },
-    { label: "Today's Revenue", value: formatCurrency(data.todayRevenue) },
-    { label: "Today's Profit", value: formatCurrency(data.todayProfit) },
-    { label: 'Low Stock Items', value: data.lowStockItems.toString() },
-    { label: 'Outstanding Debt', value: formatCurrency(data.outstandingDebt) },
-  ];
-
-  return (
-    <VStack gap={6} align="stretch">
-      <Heading size="lg">Dashboard</Heading>
-      <SimpleGrid columns={{ base: 2, md: 3 }} gap={4}>
-        {stats.map((stat) => (
-          <Box
-            key={stat.label}
-            bg="white"
-            p={5}
-            borderRadius="lg"
-            shadow="sm"
-            border="1px solid"
-            borderColor="gray.200"
-          >
-            <Text fontSize="sm" color="gray.600" mb={1}>
-              {stat.label}
-            </Text>
-            <Text fontSize="2xl" fontWeight="bold">
-              {stat.value}
-            </Text>
-          </Box>
-        ))}
-      </SimpleGrid>
-    </VStack>
-  );
+  return <DashboardContent data={data} />;
 }

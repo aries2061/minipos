@@ -1,0 +1,140 @@
+const my: Record<string, string> = {
+  // App
+  'app.name': 'MiniPOS',
+
+  // Nav
+  'nav.dashboard': 'ဒက်ရှ်ဘုတ်',
+  'nav.inventory': 'ကုန်ပစ္စည်း',
+  'nav.sales': 'ရောင်းချမှု',
+  'nav.customers': 'ဝယ်သူများ',
+  'nav.analytics': 'စာရင်းအင်း',
+  'nav.debts': 'အကြွေးများ',
+
+  // Auth
+  'auth.signIn': 'ဝင်ရောက်ရန်',
+  'auth.signOut': 'ထွက်ရန်',
+
+  // Search
+  'search.placeholder': 'ရှာဖွေရန်... ⌘K',
+  'search.commandPlaceholder': 'ပစ္စည်း၊ အကြွေး၊ စာမျက်နှာ ရှာဖွေရန်...',
+  'search.noResults': 'ရလဒ်မတွေ့ပါ',
+  'search.type.item': 'ပစ္စည်း',
+  'search.type.debtor': 'အကြွေးရှင်',
+  'search.type.page': 'စာမျက်နှာ',
+
+  // Dashboard
+  'dashboard.title': 'ဒက်ရှ်ဘုတ်',
+  'dashboard.totalItems': 'စုစုပေါင်းပစ္စည်း',
+  'dashboard.todaySales': 'ယနေ့ရောင်းချမှု',
+  'dashboard.todayRevenue': 'ယနေ့ဝင်ငွေ',
+  'dashboard.todayProfit': 'ယနေ့အမြတ်',
+  'dashboard.lowStockItems': 'စတော့နည်းပစ္စည်း',
+  'dashboard.outstandingDebt': 'ကျန်ရှိအကြွေး',
+
+  // Inventory
+  'inventory.title': 'ကုန်ပစ္စည်းများ',
+  'inventory.searchPlaceholder': 'အမည်၊ အမျိုးအစား သို့ SKU ဖြင့်ရှာဖွေရန်...',
+  'inventory.addItem': '+ ပစ္စည်းထည့်ရန်',
+  'inventory.editItem': 'ပစ္စည်းပြင်ဆင်ရန်',
+  'inventory.addNewItem': 'ပစ္စည်းအသစ်ထည့်ရန်',
+  'inventory.emptyMessage': 'ပစ္စည်းမတွေ့ပါ။ ပထမဆုံးပစ္စည်းထည့်ပါ!',
+  'inventory.itemName': 'ပစ္စည်းအမည် *',
+  'inventory.category': 'အမျိုးအစား',
+  'inventory.costPrice': 'ကုန်ကျစရိတ် *',
+  'inventory.salePrice': 'ရောင်းဈေး *',
+  'inventory.stockQuantity': 'စတော့အရေအတွက် *',
+  'inventory.skuBarcode': 'SKU / ဘားကုဒ်',
+  'inventory.deleteConfirm': 'ဤပစ္စည်းကိုဖျက်မလား?',
+
+  // Table headers
+  'table.name': 'အမည်',
+  'table.category': 'အမျိုးအစား',
+  'table.cost': 'ကုန်ကျစရိတ်',
+  'table.salePrice': 'ရောင်းဈေး',
+  'table.stock': 'စတော့',
+  'table.sku': 'SKU',
+  'table.actions': 'လုပ်ဆောင်ချက်',
+  'table.phone': 'ဖုန်း',
+  'table.date': 'ရက်စွဲ',
+  'table.items': 'ပစ္စည်းများ',
+  'table.total': 'စုစုပေါင်း',
+  'table.payment': 'ငွေပေးချေမှု',
+  'table.debtor': 'အကြွေးရှင်',
+  'table.status': 'အခြေအနေ',
+  'table.noData': 'ဒေတာမတွေ့ပါ။',
+
+  // Common actions
+  'action.edit': 'ပြင်ဆင်',
+  'action.delete': 'ဖျက်',
+  'action.cancel': 'မလုပ်တော့ပါ',
+  'action.create': 'ဖန်တီးရန်',
+  'action.update': 'ပြင်ဆင်ရန်',
+
+  // Sales / POS
+  'sales.title': 'အရောင်းစနစ်',
+  'sales.recentSales': 'မကြာသေးမီရောင်းချမှုများ',
+  'sales.searchItems': 'ပစ္စည်းရှာဖွေရန်...',
+  'sales.stock': 'စတော့',
+  'sales.cart': 'စျေးခြင်း',
+  'sales.items': 'ခု',
+  'sales.emptyCart': 'ပစ္စည်းများကိုနှိပ်၍ထည့်ပါ',
+  'sales.each': 'တစ်ခုလျှင်',
+  'sales.total': 'စုစုပေါင်း',
+  'sales.paymentMode': 'ငွေပေးချေမှုပုံစံ',
+  'sales.cash': 'လက်ငင်း',
+  'sales.digital': 'ဒစ်ဂျစ်တယ်',
+  'sales.debt': 'အကြွေး',
+  'sales.debtorName': 'အကြွေးရှင်အမည် *',
+  'sales.enterDebtorName': 'အကြွေးရှင်အမည်ထည့်ပါ',
+  'sales.debtorRequired': 'အကြွေးရှင်အမည်ထည့်ပါ',
+  'sales.success': 'ရောင်းချမှုမှတ်တမ်းတင်ပြီးပါပြီ!',
+  'sales.completeSale': 'ရောင်းချမှုပြီးစီးရန်',
+  'sales.emptyMessage': 'ရောင်းချမှုမရှိသေးပါ။',
+  'sales.paid': 'ပေးပြီး',
+  'sales.unpaid': 'မပေးရသေး',
+  'sales.completed': 'ပြီးစီးပြီ',
+
+  // Customers
+  'customers.title': 'ဝယ်သူများ',
+  'customers.searchPlaceholder': 'အမည် သို့ ဖုန်းဖြင့်ရှာဖွေရန်...',
+  'customers.addCustomer': '+ ဝယ်သူထည့်ရန်',
+  'customers.editCustomer': 'ဝယ်သူပြင်ဆင်ရန်',
+  'customers.addNewCustomer': 'ဝယ်သူအသစ်ထည့်ရန်',
+  'customers.emptyMessage': 'ဝယ်သူမတွေ့ပါ။ ပထမဆုံးဝယ်သူထည့်ပါ!',
+  'customers.name': 'အမည် *',
+  'customers.phone': 'ဖုန်းနံပါတ်',
+  'customers.deleteConfirm': 'ဤဝယ်သူကိုဖျက်မလား?',
+
+  // Analytics
+  'analytics.title': 'စာရင်းအင်း',
+  'analytics.today': 'ယနေ့',
+  'analytics.weekly': 'အပတ်စဉ်',
+  'analytics.monthly': 'လစဉ်',
+  'analytics.yearly': 'နှစ်စဉ်',
+  'analytics.custom': 'စိတ်ကြိုက်:',
+  'analytics.to': 'မှ',
+  'analytics.grossRevenue': 'စုစုပေါင်းဝင်ငွေ',
+  'analytics.totalCost': 'စုစုပေါင်းကုန်ကျစရိတ်',
+  'analytics.netProfit': 'အသားတင်အမြတ်',
+  'analytics.totalSales': 'စုစုပေါင်းရောင်းချမှု',
+  'analytics.profitMargin': 'အမြတ်နှုန်း',
+  'analytics.mostSoldItems': 'အရောင်းရဆုံးပစ္စည်းများ',
+  'analytics.sold': 'ရောင်းပြီး',
+  'analytics.noSalesData': 'ဤကာလအတွက်ရောင်းချမှုဒေတာမရှိပါ',
+
+  // Debts
+  'debts.title': 'အကြွေးစီမံခန့်ခွဲမှု',
+  'debts.searchPlaceholder': 'အကြွေးရှင်အမည်ဖြင့်ရှာဖွေရန်...',
+  'debts.activeDebtors': 'လက်ရှိအကြွေးရှင်:',
+  'debts.totalOutstanding': 'ကျန်ရှိအကြွေးစုစုပေါင်း:',
+  'debts.transactions': 'ငွေလွှဲမှု',
+  'debts.outstanding': 'ကျန်ရှိငွေ',
+  'debts.hasDebt': 'အကြွေးရှိ',
+  'debts.settled': 'ပေးပြီး',
+  'debts.noDebtors': 'အကြွေးရှင်မတွေ့ပါ။',
+  'debts.markPaid': 'ပေးပြီးမှတ်ရန်',
+  'debts.markPaidConfirm': 'ဤအကြွေးကိုပေးပြီးဟုမှတ်မလား?',
+  'debts.paid': 'ပေးပြီး',
+};
+
+export default my;

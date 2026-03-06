@@ -3,18 +3,22 @@
 import { Box, VStack, Text, Flex, Icon } from '@chakra-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FiHome, FiPackage, FiShoppingCart, FiBarChart2, FiDollarSign } from 'react-icons/fi';
+import { FiHome, FiPackage, FiShoppingCart, FiBarChart2, FiDollarSign, FiUsers } from 'react-icons/fi';
+import { useTranslation } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 const navItems = [
-  { label: 'Dashboard', href: '/', icon: FiHome },
-  { label: 'Inventory', href: '/inventory', icon: FiPackage },
-  { label: 'Sales', href: '/sales', icon: FiShoppingCart },
-  { label: 'Analytics', href: '/analytics', icon: FiBarChart2 },
-  { label: 'Debts', href: '/debts', icon: FiDollarSign },
+  { labelKey: 'nav.dashboard' as TranslationKey, href: '/', icon: FiHome },
+  { labelKey: 'nav.inventory' as TranslationKey, href: '/inventory', icon: FiPackage },
+  { labelKey: 'nav.sales' as TranslationKey, href: '/sales', icon: FiShoppingCart },
+  { labelKey: 'nav.customers' as TranslationKey, href: '/customers', icon: FiUsers },
+  { labelKey: 'nav.analytics' as TranslationKey, href: '/analytics', icon: FiBarChart2 },
+  { labelKey: 'nav.debts' as TranslationKey, href: '/debts', icon: FiDollarSign },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -49,7 +53,7 @@ export default function Sidebar() {
               >
                 <Icon as={item.icon} boxSize={5} />
                 <Text fontSize="sm" fontWeight={isActive ? 'semibold' : 'normal'}>
-                  {item.label}
+                  {t(item.labelKey)}
                 </Text>
               </Flex>
             </Link>

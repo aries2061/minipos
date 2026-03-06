@@ -4,10 +4,13 @@ import { Flex, Text, Button, Box } from '@chakra-ui/react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import CommandSearch from '@/components/ui/CommandSearch';
+import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { useTranslation } from '@/lib/i18n';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [searchOpen, setSearchOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -37,20 +40,21 @@ export default function Navbar() {
             color="gray.500"
             _hover={{ borderColor: 'gray.400' }}
           >
-            Search... ⌘K
+            {t('search.placeholder')}
           </Box>
         </Flex>
         <Flex align="center" gap={3}>
+          <LanguageSwitcher />
           {session?.user ? (
             <>
               <Text fontSize="sm">{session.user.name || session.user.email}</Text>
               <Button size="sm" variant="outline" onClick={() => signOut()}>
-                Sign Out
+                {t('auth.signOut')}
               </Button>
             </>
           ) : (
             <Button size="sm" colorScheme="blue" onClick={() => signIn('google')}>
-              Sign In
+              {t('auth.signIn')}
             </Button>
           )}
         </Flex>

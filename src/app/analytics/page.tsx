@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { Suspense } from 'react';
-import { VStack, Heading, Skeleton } from '@chakra-ui/react';
+import { VStack, Skeleton } from '@chakra-ui/react';
+import PageHeader from '@/components/ui/PageHeader';
 import { prisma } from '@/lib/prisma';
 import { getDateRange } from '@/lib/utils';
 import { endOfDay, startOfDay } from 'date-fns';
@@ -75,7 +76,7 @@ export default async function AnalyticsPage({ searchParams }: Props) {
 
   return (
     <VStack gap={6} align="stretch">
-      <Heading size="lg">Analytics</Heading>
+      <PageHeader titleKey="analytics.title" />
       <DateRangeFilter />
       <Suspense fallback={<Skeleton height="300px" borderRadius="md" />}>
         <AnalyticsData from={from} to={to} />

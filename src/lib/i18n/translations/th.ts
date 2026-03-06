@@ -1,0 +1,140 @@
+const th: Record<string, string> = {
+  // App
+  'app.name': 'MiniPOS',
+
+  // Nav
+  'nav.dashboard': 'แดชบอร์ด',
+  'nav.inventory': 'สินค้าคงคลัง',
+  'nav.sales': 'การขาย',
+  'nav.customers': 'ลูกค้า',
+  'nav.analytics': 'วิเคราะห์',
+  'nav.debts': 'หนี้สิน',
+
+  // Auth
+  'auth.signIn': 'เข้าสู่ระบบ',
+  'auth.signOut': 'ออกจากระบบ',
+
+  // Search
+  'search.placeholder': 'ค้นหา... ⌘K',
+  'search.commandPlaceholder': 'ค้นหาสินค้า, ลูกหนี้, หน้า...',
+  'search.noResults': 'ไม่พบผลลัพธ์',
+  'search.type.item': 'สินค้า',
+  'search.type.debtor': 'ลูกหนี้',
+  'search.type.page': 'หน้า',
+
+  // Dashboard
+  'dashboard.title': 'แดชบอร์ด',
+  'dashboard.totalItems': 'สินค้าทั้งหมด',
+  'dashboard.todaySales': 'ยอดขายวันนี้',
+  'dashboard.todayRevenue': 'รายได้วันนี้',
+  'dashboard.todayProfit': 'กำไรวันนี้',
+  'dashboard.lowStockItems': 'สินค้าใกล้หมด',
+  'dashboard.outstandingDebt': 'หนี้ค้างชำระ',
+
+  // Inventory
+  'inventory.title': 'สินค้าคงคลัง',
+  'inventory.searchPlaceholder': 'ค้นหาสินค้าตามชื่อ, หมวดหมู่, หรือ SKU...',
+  'inventory.addItem': '+ เพิ่มสินค้า',
+  'inventory.editItem': 'แก้ไขสินค้า',
+  'inventory.addNewItem': 'เพิ่มสินค้าใหม่',
+  'inventory.emptyMessage': 'ไม่พบสินค้า เพิ่มสินค้าชิ้นแรกของคุณ!',
+  'inventory.itemName': 'ชื่อสินค้า *',
+  'inventory.category': 'หมวดหมู่',
+  'inventory.costPrice': 'ราคาทุน *',
+  'inventory.salePrice': 'ราคาขาย *',
+  'inventory.stockQuantity': 'จำนวนสต็อก *',
+  'inventory.skuBarcode': 'SKU / บาร์โค้ด',
+  'inventory.deleteConfirm': 'ลบสินค้านี้?',
+
+  // Table headers
+  'table.name': 'ชื่อ',
+  'table.category': 'หมวดหมู่',
+  'table.cost': 'ต้นทุน',
+  'table.salePrice': 'ราคาขาย',
+  'table.stock': 'สต็อก',
+  'table.sku': 'SKU',
+  'table.actions': 'การดำเนินการ',
+  'table.phone': 'โทรศัพท์',
+  'table.date': 'วันที่',
+  'table.items': 'รายการ',
+  'table.total': 'รวม',
+  'table.payment': 'การชำระเงิน',
+  'table.debtor': 'ลูกหนี้',
+  'table.status': 'สถานะ',
+  'table.noData': 'ไม่พบข้อมูล',
+
+  // Common actions
+  'action.edit': 'แก้ไข',
+  'action.delete': 'ลบ',
+  'action.cancel': 'ยกเลิก',
+  'action.create': 'สร้าง',
+  'action.update': 'อัปเดต',
+
+  // Sales / POS
+  'sales.title': 'จุดขาย',
+  'sales.recentSales': 'การขายล่าสุด',
+  'sales.searchItems': 'ค้นหาสินค้า...',
+  'sales.stock': 'สต็อก',
+  'sales.cart': 'ตะกร้า',
+  'sales.items': 'ชิ้น',
+  'sales.emptyCart': 'คลิกสินค้าเพื่อเพิ่มลงตะกร้า',
+  'sales.each': 'ต่อชิ้น',
+  'sales.total': 'รวม',
+  'sales.paymentMode': 'วิธีชำระเงิน',
+  'sales.cash': 'เงินสด',
+  'sales.digital': 'ดิจิทัล',
+  'sales.debt': 'เชื่อ',
+  'sales.debtorName': 'ชื่อลูกหนี้ *',
+  'sales.enterDebtorName': 'กรอกชื่อลูกหนี้',
+  'sales.debtorRequired': 'กรุณากรอกชื่อลูกหนี้',
+  'sales.success': 'บันทึกการขายเรียบร้อย!',
+  'sales.completeSale': 'ยืนยันการขาย',
+  'sales.emptyMessage': 'ยังไม่มีการขาย',
+  'sales.paid': 'ชำระแล้ว',
+  'sales.unpaid': 'ยังไม่ชำระ',
+  'sales.completed': 'เสร็จสิ้น',
+
+  // Customers
+  'customers.title': 'ลูกค้า',
+  'customers.searchPlaceholder': 'ค้นหาลูกค้าตามชื่อหรือโทรศัพท์...',
+  'customers.addCustomer': '+ เพิ่มลูกค้า',
+  'customers.editCustomer': 'แก้ไขลูกค้า',
+  'customers.addNewCustomer': 'เพิ่มลูกค้าใหม่',
+  'customers.emptyMessage': 'ไม่พบลูกค้า เพิ่มลูกค้าคนแรกของคุณ!',
+  'customers.name': 'ชื่อ *',
+  'customers.phone': 'หมายเลขโทรศัพท์',
+  'customers.deleteConfirm': 'ลบลูกค้านี้?',
+
+  // Analytics
+  'analytics.title': 'วิเคราะห์',
+  'analytics.today': 'วันนี้',
+  'analytics.weekly': 'รายสัปดาห์',
+  'analytics.monthly': 'รายเดือน',
+  'analytics.yearly': 'รายปี',
+  'analytics.custom': 'กำหนดเอง:',
+  'analytics.to': 'ถึง',
+  'analytics.grossRevenue': 'รายได้รวม',
+  'analytics.totalCost': 'ต้นทุนรวม',
+  'analytics.netProfit': 'กำไรสุทธิ',
+  'analytics.totalSales': 'ยอดขายรวม',
+  'analytics.profitMargin': 'อัตรากำไร',
+  'analytics.mostSoldItems': 'สินค้าขายดี',
+  'analytics.sold': 'ขายแล้ว',
+  'analytics.noSalesData': 'ไม่มีข้อมูลการขายในช่วงนี้',
+
+  // Debts
+  'debts.title': 'จัดการหนี้สิน',
+  'debts.searchPlaceholder': 'ค้นหาลูกหนี้ตามชื่อ...',
+  'debts.activeDebtors': 'ลูกหนี้ปัจจุบัน:',
+  'debts.totalOutstanding': 'หนี้ค้างรวม:',
+  'debts.transactions': 'รายการ',
+  'debts.outstanding': 'ค้างชำระ',
+  'debts.hasDebt': 'มีหนี้',
+  'debts.settled': 'ชำระแล้ว',
+  'debts.noDebtors': 'ไม่พบลูกหนี้',
+  'debts.markPaid': 'ทำเครื่องหมายชำระแล้ว',
+  'debts.markPaidConfirm': 'ทำเครื่องหมายหนี้นี้ว่าชำระแล้ว?',
+  'debts.paid': 'ชำระแล้ว',
+};
+
+export default th;

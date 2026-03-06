@@ -3,6 +3,7 @@
 import { Box, Button, Input, VStack, HStack, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { createItem, updateItem } from '@/actions/inventory';
+import { useTranslation } from '@/lib/i18n';
 
 interface ItemFormProps {
   item?: {
@@ -20,6 +21,7 @@ interface ItemFormProps {
 export default function ItemForm({ item, onClose }: ItemFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { t } = useTranslation();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,45 +55,45 @@ export default function ItemForm({ item, onClose }: ItemFormProps) {
   return (
     <Box bg="white" p={6} borderRadius="lg" shadow="sm" border="1px solid" borderColor="gray.200">
       <Text fontSize="lg" fontWeight="semibold" mb={4}>
-        {item ? 'Edit Item' : 'Add New Item'}
+        {item ? t('inventory.editItem') : t('inventory.addNewItem')}
       </Text>
       <form onSubmit={handleSubmit}>
         <VStack gap={4} align="stretch">
           <HStack gap={4}>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>Item Name *</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.itemName')}</Text>
               <Input name="name" defaultValue={item?.name} required size="sm" />
             </Box>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>Category</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.category')}</Text>
               <Input name="category" defaultValue={item?.category || 'General'} size="sm" />
             </Box>
           </HStack>
           <HStack gap={4}>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>Cost Price *</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.costPrice')}</Text>
               <Input name="costPrice" type="number" step="0.01" defaultValue={item?.costPrice} required size="sm" />
             </Box>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>Sale Price *</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.salePrice')}</Text>
               <Input name="salePrice" type="number" step="0.01" defaultValue={item?.salePrice} required size="sm" />
             </Box>
           </HStack>
           <HStack gap={4}>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>Stock Quantity *</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.stockQuantity')}</Text>
               <Input name="stock" type="number" defaultValue={item?.stock ?? 0} required size="sm" />
             </Box>
             <Box flex={1}>
-              <Text fontSize="sm" mb={1}>SKU / Barcode</Text>
+              <Text fontSize="sm" mb={1}>{t('inventory.skuBarcode')}</Text>
               <Input name="sku" defaultValue={item?.sku || ''} size="sm" />
             </Box>
           </HStack>
           {error && <Text color="red.500" fontSize="sm">{error}</Text>}
           <HStack gap={2} justify="flex-end">
-            <Button size="sm" variant="outline" onClick={onClose}>Cancel</Button>
+            <Button size="sm" variant="outline" onClick={onClose}>{t('action.cancel')}</Button>
             <Button size="sm" colorScheme="blue" type="submit" loading={loading}>
-              {item ? 'Update' : 'Create'}
+              {item ? t('action.update') : t('action.create')}
             </Button>
           </HStack>
         </VStack>

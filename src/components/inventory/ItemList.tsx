@@ -7,6 +7,7 @@ import DataTable from '@/components/ui/DataTable';
 import ItemForm from './ItemForm';
 import { deleteItem } from '@/actions/inventory';
 import { formatCurrency } from '@/lib/utils';
+import { useTranslation } from '@/lib/i18n';
 
 interface ItemListProps {
   items: Item[];
@@ -15,29 +16,30 @@ interface ItemListProps {
 export default function ItemList({ items }: ItemListProps) {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const { t } = useTranslation();
 
   const columns = [
-    { header: 'Name', accessor: 'name' as const },
-    { header: 'Category', accessor: 'category' as const },
+    { header: t('table.name'), accessor: 'name' as const },
+    { header: t('table.category'), accessor: 'category' as const },
     {
-      header: 'Cost',
+      header: t('table.cost'),
       accessor: (row: Item) => formatCurrency(row.costPrice),
     },
     {
-      header: 'Sale Price',
+      header: t('table.salePrice'),
       accessor: (row: Item) => formatCurrency(row.salePrice),
     },
     {
-      header: 'Stock',
+      header: t('table.stock'),
       accessor: (row: Item) => (
         <Badge colorScheme={row.stock <= 5 ? 'red' : row.stock <= 20 ? 'yellow' : 'green'}>
           {row.stock}
         </Badge>
       ),
     },
-    { header: 'SKU', accessor: (row: Item) => row.sku || '-' },
+    { header: t('table.sku'), accessor: (row: Item) => row.sku || '-' },
     {
-      header: 'Actions',
+      header: t('table.actions'),
       accessor: (row: Item) => (
         <HStack gap={2}>
           <Button
@@ -48,19 +50,19 @@ export default function ItemList({ items }: ItemListProps) {
               setShowForm(true);
             }}
           >
-            Edit
+            {t('action.edit')}
           </Button>
           <Button
             size="xs"
             colorScheme="red"
             variant="outline"
             onClick={async () => {
-              if (confirm('Delete this item?')) {
+              if (confirm(t('inventory.deleteConfirm'))) {
                 await deleteItem(row.id);
               }
             }}
           >
-            Delete
+            {t('action.delete')}
           </Button>
         </HStack>
       ),
@@ -83,11 +85,11 @@ export default function ItemList({ items }: ItemListProps) {
       {!showForm && (
         <Box mb={4}>
           <Button size="sm" colorScheme="blue" onClick={() => setShowForm(true)}>
-            + Add Item
+            {t('inventory.addItem')}
           </Button>
         </Box>
       )}
-      <DataTable columns={columns} data={items} emptyMessage="No items found. Add your first item!" />
+      <DataTable columns={columns} data={items} emptyMessage={t('inventory.emptyMessage')} />
     </Box>
   );
 }

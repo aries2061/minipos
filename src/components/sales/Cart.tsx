@@ -5,6 +5,7 @@ import { Box, Button, VStack, HStack, Text, Input, Badge, Flex } from '@chakra-u
 import { Item } from '@prisma/client';
 import { createSale } from '@/actions/sales';
 import { formatCurrency } from '@/lib/utils';
+import { useTranslation } from '@/lib/i18n';
 import type { CartItem } from '@/types';
 
 interface CartProps {
@@ -19,6 +20,7 @@ export default function Cart({ items }: CartProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { t } = useTranslation();
 
   const filteredItems = items.filter(
     (i) =>
@@ -56,7 +58,7 @@ export default function Cart({ items }: CartProps) {
   const handleCheckout = async () => {
     if (cart.length === 0) return;
     if (paymentMode === 'debt' && !debtorName.trim()) {
-      setError('Please enter debtor name');
+      setError(t('sales.debtorRequired'));
       return;
     }
 
@@ -79,7 +81,7 @@ export default function Cart({ items }: CartProps) {
       });
       setCart([]);
       setDebtorName('');
-      setSuccess('Sale recorded successfully!');
+      setSuccess(t('sales.success'));
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to process sale');
@@ -93,7 +95,7 @@ export default function Cart({ items }: CartProps) {
       {/* Item Selection */}
       <Box flex={1}>
         <Input
-          placeholder="Search items..."
+          placeholder={t('sales.searchItems')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size="sm"
@@ -122,7 +124,7 @@ export default function Cart({ items }: CartProps) {
               <HStack gap={3}>
                 <Text fontSize="sm" fontWeight="semibold">{formatCurrency(item.salePrice)}</Text>
                 <Badge colorScheme={item.stock <= 5 ? 'red' : 'green'} fontSize="xs">
-                  Stock: {item.stock}
+                  {t('sales.stock')}: {item.stock}
                 </Badge>
               </HStack>
             </Flex>
@@ -132,18 +134,18 @@ export default function Cart({ items }: CartProps) {
 
       {/* Cart */}
       <Box w={{ base: 'full', lg: '380px' }} bg="white" p={5} borderRadius="lg" border="1px solid" borderColor="gray.200">
-        <Text fontSize="lg" fontWeight="semibold" mb={4}>Cart ({cart.length} items)</Text>
+        <Text fontSize="lg" fontWeight="semibold" mb={4}>{t('sales.cart')} ({cart.length} {t('sales.items')})</Text>
         <VStack align="stretch" gap={2} mb={4} maxH="250px" overflowY="auto">
           {cart.length === 0 ? (
             <Text fontSize="sm" color="gray.500" textAlign="center" py={4}>
-              Click items to add to cart
+              {t('sales.emptyCart')}
             </Text>
           ) : (
             cart.map((c) => (
               <Flex key={c.id} justify="space-between" align="center" py={1}>
                 <Box>
                   <Text fontSize="sm">{c.name}</Text>
-                  <Text fontSize="xs" color="gray.500">{formatCurrency(c.salePrice)} each</Text>
+                  <Text fontSize="xs" color="gray.500">{formatCurrency(c.salePrice)} {t('sales.each')}</Text>
                 </Box>
                 <HStack gap={2}>
                   <Button size="xs" onClick={() => updateQuantity(c.id, c.quantity - 1)}>-</Button>
@@ -160,34 +162,36 @@ export default function Cart({ items }: CartProps) {
 
         <Box borderTop="1px solid" borderColor="gray.200" pt={4}>
           <Flex justify="space-between" mb={4}>
-            <Text fontWeight="semibold">Total</Text>
+            <Text fontWeight="semibold">{t('sales.total')}</Text>
             <Text fontWeight="bold" fontSize="lg">{formatCurrency(total)}</Text>
           </Flex>
 
-          <Text fontSize="sm" mb={2}>Payment Mode</Text>
+          <Text fontSize="sm" mb={2}>{t('sales.paymentMode')}</Text>
           <HStack gap={2} mb={4}>
-            {(['cash', 'digital', 'debt'] as const).map((mode) => (
-              <Button
-                key={mode}
-                size="sm"
-                variant={paymentMode === mode ? 'solid' : 'outline'}
-                colorScheme={paymentMode === mode ? 'blue' : 'gray'}
-                onClick={() => setPaymentMode(mode)}
-                textTransform="capitalize"
-              >
-                {mode}
-              </Button>
-            ))}
+            {(['cash', 'digital', 'debt'] as const).map((mode) => {
+              const modeLabels = { cash: t('sales.cash'), digital: t('sales.digital'), debt: t('sales.debt') };
+              return (
+                <Button
+                  key={mode}
+                  size="sm"
+                  variant={paymentMode === mode ? 'solid' : 'outline'}
+                  colorScheme={paymentMode === mode ? 'blue' : 'gray'}
+                  onClick={() => setPaymentMode(mode)}
+                >
+                  {modeLabels[mode]}
+                </Button>
+              );
+            })}
           </HStack>
 
           {paymentMode === 'debt' && (
             <Box mb={4}>
-              <Text fontSize="sm" mb={1}>Debtor Name *</Text>
+              <Text fontSize="sm" mb={1}>{t('sales.debtorName')}</Text>
               <Input
                 size="sm"
                 value={debtorName}
                 onChange={(e) => setDebtorName(e.target.value)}
-                placeholder="Enter debtor name"
+                placeholder={t('sales.enterDebtorName')}
               />
             </Box>
           )}
@@ -202,7 +206,7 @@ export default function Cart({ items }: CartProps) {
             loading={loading}
             disabled={cart.length === 0}
           >
-            Complete Sale
+            {t('sales.completeSale')}
           </Button>
         </Box>
       </Box>

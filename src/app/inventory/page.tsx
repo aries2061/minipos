@@ -1,11 +1,12 @@
 export const dynamic = 'force-dynamic';
 
 import { Suspense } from 'react';
-import { VStack, Heading, HStack } from '@chakra-ui/react';
+import { VStack, HStack } from '@chakra-ui/react';
 import { getItems } from '@/actions/inventory';
 import SearchInput from '@/components/ui/SearchInput';
 import TableSkeleton from '@/components/ui/TableSkeleton';
 import ItemList from '@/components/inventory/ItemList';
+import PageHeader from '@/components/ui/PageHeader';
 
 interface Props {
   searchParams: Promise<{ q?: string; lowStock?: string }>;
@@ -24,9 +25,9 @@ export default async function InventoryPage({ searchParams }: Props) {
   return (
     <VStack gap={6} align="stretch">
       <HStack justify="space-between">
-        <Heading size="lg">Inventory</Heading>
+        <PageHeader titleKey="inventory.title" />
       </HStack>
-      <SearchInput placeholder="Search items by name, category, or SKU..." />
+      <SearchInput placeholderKey="inventory.searchPlaceholder" />
       <Suspense fallback={<TableSkeleton rows={8} columns={7} />}>
         <ItemListWrapper search={search} lowStock={lowStock} />
       </Suspense>

@@ -1,8 +1,10 @@
 'use client';
 
 import { Box, Input, VStack, Text, Flex } from '@chakra-ui/react';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface SearchResult {
   type: 'item' | 'debtor' | 'page';
@@ -10,12 +12,13 @@ interface SearchResult {
   href: string;
 }
 
-const pages: SearchResult[] = [
-  { type: 'page', label: 'Dashboard', href: '/' },
-  { type: 'page', label: 'Inventory', href: '/inventory' },
-  { type: 'page', label: 'Sales', href: '/sales' },
-  { type: 'page', label: 'Analytics', href: '/analytics' },
-  { type: 'page', label: 'Debts', href: '/debts' },
+const pageConfigs = [
+  { labelKey: 'nav.dashboard' as TranslationKey, href: '/' },
+  { labelKey: 'nav.inventory' as TranslationKey, href: '/inventory' },
+  { labelKey: 'nav.sales' as TranslationKey, href: '/sales' },
+  { labelKey: 'nav.customers' as TranslationKey, href: '/customers' },
+  { labelKey: 'nav.analytics' as TranslationKey, href: '/analytics' },
+  { labelKey: 'nav.debts' as TranslationKey, href: '/debts' },
 ];
 
 interface CommandSearchProps {
@@ -24,6 +27,11 @@ interface CommandSearchProps {
 }
 
 export default function CommandSearch({ open, onClose }: CommandSearchProps) {
+  const { t } = useTranslation();
+  const pages: SearchResult[] = useMemo(() =>
+    pageConfigs.map((p) => ({ type: 'page' as const, label: t(p.labelKey), href: p.href })),
+    [t]
+  );
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>(pages);
   const router = useRouter();
@@ -100,7 +108,7 @@ export default function CommandSearch({ open, onClose }: CommandSearchProps) {
           ref={inputRef}
           value={query}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search items, debtors, pages..."
+          placeholder={t('search.commandPlaceholder')}
           size="lg"
           border="none"
           borderBottom="1px solid"
@@ -123,14 +131,14 @@ export default function CommandSearch({ open, onClose }: CommandSearchProps) {
               textAlign="left"
             >
               <Text fontSize="xs" color="gray.500" textTransform="uppercase" w="50px">
-                {r.type}
+                {t(`search.type.${r.type}` as TranslationKey)}
               </Text>
               <Text fontSize="sm">{r.label}</Text>
             </Flex>
           ))}
           {results.length === 0 && (
             <Text fontSize="sm" color="gray.500" p={3} textAlign="center">
-              No results found
+              {t('search.noResults')}
             </Text>
           )}
         </VStack>

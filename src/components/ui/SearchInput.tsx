@@ -3,12 +3,17 @@
 import { Input, Box } from '@chakra-ui/react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
+import { useTranslation } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface SearchInputProps {
   placeholder?: string;
+  placeholderKey?: TranslationKey;
 }
 
-export default function SearchInput({ placeholder = 'Search...' }: SearchInputProps) {
+export default function SearchInput({ placeholder, placeholderKey }: SearchInputProps) {
+  const { t } = useTranslation();
+  const displayPlaceholder = placeholderKey ? t(placeholderKey) : placeholder || 'Search...';
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -29,7 +34,7 @@ export default function SearchInput({ placeholder = 'Search...' }: SearchInputPr
   return (
     <Box maxW="400px">
       <Input
-        placeholder={placeholder}
+        placeholder={displayPlaceholder}
         defaultValue={searchParams.get('q') || ''}
         onChange={(e) => handleSearch(e.target.value)}
         size="sm"

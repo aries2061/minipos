@@ -2,15 +2,18 @@
 
 import { HStack, Button, Input, Box, Text } from '@chakra-ui/react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useTranslation } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 const presets = [
-  { label: 'Today', value: 'today' },
-  { label: 'Weekly', value: 'weekly' },
-  { label: 'Monthly', value: 'monthly' },
-  { label: 'Yearly', value: 'yearly' },
+  { labelKey: 'analytics.today' as TranslationKey, value: 'today' },
+  { labelKey: 'analytics.weekly' as TranslationKey, value: 'weekly' },
+  { labelKey: 'analytics.monthly' as TranslationKey, value: 'monthly' },
+  { labelKey: 'analytics.yearly' as TranslationKey, value: 'yearly' },
 ];
 
 export default function DateRangeFilter() {
+  const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -43,11 +46,11 @@ export default function DateRangeFilter() {
             colorScheme={currentPeriod === p.value ? 'blue' : 'gray'}
             onClick={() => setPeriod(p.value)}
           >
-            {p.label}
+            {t(p.labelKey)}
           </Button>
         ))}
         <HStack gap={2}>
-          <Text fontSize="sm" color="gray.600">Custom:</Text>
+          <Text fontSize="sm" color="gray.600">{t('analytics.custom')}</Text>
           <Input
             type="date"
             size="sm"
@@ -58,7 +61,7 @@ export default function DateRangeFilter() {
               if (e.target.value) setCustomRange(e.target.value, to);
             }}
           />
-          <Text fontSize="sm">to</Text>
+          <Text fontSize="sm">{t('analytics.to')}</Text>
           <Input
             type="date"
             size="sm"

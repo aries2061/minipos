@@ -1,11 +1,13 @@
 export const dynamic = 'force-dynamic';
 
 import { Suspense } from 'react';
-import { VStack, Heading, Box, Text } from '@chakra-ui/react';
+import { VStack, Box } from '@chakra-ui/react';
 import { prisma } from '@/lib/prisma';
 import TableSkeleton from '@/components/ui/TableSkeleton';
 import Cart from '@/components/sales/Cart';
 import SalesList from '@/components/sales/SalesList';
+import PageHeader from '@/components/ui/PageHeader';
+import TranslatedText from '@/components/ui/TranslatedText';
 
 async function POSSection() {
   const items = await prisma.item.findMany({
@@ -23,7 +25,7 @@ async function RecentSalesSection() {
   });
   return (
     <Box>
-      <Text fontSize="md" fontWeight="semibold" mb={3}>Recent Sales</Text>
+      <TranslatedText tKey="sales.recentSales" fontSize="md" fontWeight="semibold" mb={3} />
       <SalesList sales={sales} />
     </Box>
   );
@@ -32,7 +34,7 @@ async function RecentSalesSection() {
 export default function SalesPage() {
   return (
     <VStack gap={8} align="stretch">
-      <Heading size="lg">Point of Sale</Heading>
+      <PageHeader titleKey="sales.title" />
       <Suspense fallback={<TableSkeleton rows={6} columns={4} />}>
         <POSSection />
       </Suspense>
