@@ -1,0 +1,37 @@
+{
+  "name": "minipos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@chakra-ui/react": "^3.34.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^7.4.2",
+    "@types/node": "^25.3.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.3.1",
+    "framer-motion": "^12.34.5",
+    "next": "^16.1.6",
+    "next-auth": "^4.24.13",
+    "prisma": "^7.4.2",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.6.0",
+    "typescript": "^5.9.3"
+  }
+}
