@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Box, Button, VStack, HStack, Text, Input, Badge, Flex } from '@chakra-ui/react';
 import { Item } from '@prisma/client';
 import { createSale } from '@/actions/sales';
@@ -9,26 +9,55 @@ import { useTranslation } from '@/lib/i18n';
 import { useSettings } from '@/lib/settings';
 import type { CartItem } from '@/types';
 
-interface CartProps {
-  items: Item[];
+interface Customer {
+  id: string;
+  name: string;
+  phone: string | null;
 }
 
-export default function Cart({ items }: CartProps) {
+interface CartProps {
+  items: Item[];
+  customers: Customer[];
+}
+
+export default function Cart({ items, customers }: CartProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [search, setSearch] = useState('');
   const [paymentMode, setPaymentMode] = useState<'cash' | 'digital' | 'debt'>('cash');
   const [debtorName, setDebtorName] = useState('');
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const { t } = useTranslation();
   const { settings } = useSettings();
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = items.filter(
     (i) =>
       i.name.toLowerCase().includes(search.toLowerCase()) ||
       i.category.toLowerCase().includes(search.toLowerCase())
   );
+
+  const filteredCustomers = debtorName.trim()
+    ? customers.filter((c) =>
+        c.name.toLowerCase().includes(debtorName.toLowerCase())
+      )
+    : customers;
+
+  const isNewCustomer = debtorName.trim() &&
+    !customers.some((c) => c.name.toLowerCase() === debtorName.trim().toLowerCase());
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const addToCart = (item: Item) => {
     setCart((prev) => {
@@ -79,7 +108,7 @@ export default function Cart({ items }: CartProps) {
         totalAmount: total,
         costTotal,
         paymentMode,
-        debtorName: paymentMode === 'debt' ? debtorName : undefined,
+        debtorName: paymentMode === 'debt' ? debtorName.trim() : undefined,
       });
       setCart([]);
       setDebtorName('');
@@ -187,14 +216,72 @@ export default function Cart({ items }: CartProps) {
           </HStack>
 
           {paymentMode === 'debt' && (
-            <Box mb={4}>
+            <Box mb={4} ref={suggestionsRef} position="relative">
               <Text fontSize="sm" mb={1}>{t('sales.debtorName')}</Text>
               <Input
                 size="sm"
                 value={debtorName}
-                onChange={(e) => setDebtorName(e.target.value)}
+                onChange={(e) => {
+                  setDebtorName(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
                 placeholder={t('sales.enterDebtorName')}
               />
+              {showSuggestions && debtorName.trim() && (
+                <Box
+                  position="absolute"
+                  top="100%"
+                  left={0}
+                  right={0}
+                  bg="white"
+                  border="1px solid"
+                  borderColor="gray.200"
+                  borderRadius="md"
+                  boxShadow="md"
+                  zIndex={10}
+                  maxH="200px"
+                  overflowY="auto"
+                  mt={1}
+                >
+                  {filteredCustomers.map((c) => (
+                    <Box
+                      key={c.id}
+                      px={3}
+                      py={2}
+                      cursor="pointer"
+                      _hover={{ bg: 'blue.50' }}
+                      onClick={() => {
+                        setDebtorName(c.name);
+                        setShowSuggestions(false);
+                      }}
+                    >
+                      <Text fontSize="sm">{c.name}</Text>
+                      {c.phone && <Text fontSize="xs" color="gray.500">{c.phone}</Text>}
+                    </Box>
+                  ))}
+                  {isNewCustomer && (
+                    <Box
+                      px={3}
+                      py={2}
+                      cursor="pointer"
+                      _hover={{ bg: 'green.50' }}
+                      borderTop={filteredCustomers.length > 0 ? '1px solid' : 'none'}
+                      borderColor="gray.100"
+                      onClick={() => setShowSuggestions(false)}
+                    >
+                      <Text fontSize="sm" color="green.600" fontWeight="medium">
+                        + {t('sales.addAsNewCustomer' as never)} &quot;{debtorName.trim()}&quot;
+                      </Text>
+                    </Box>
+                  )}
+                  {filteredCustomers.length === 0 && !isNewCustomer && (
+                    <Box px={3} py={2}>
+                      <Text fontSize="sm" color="gray.500">{t('search.noResults')}</Text>
+                    </Box>
+                  )}
+                </Box>
+              )}
             </Box>
           )}
 

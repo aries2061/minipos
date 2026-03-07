@@ -184,6 +184,8 @@ const th: Record<string, string> = {
   'debts.selectCustomer': 'เลือกลูกค้า',
   'debts.noDebts': 'ไม่พบบันทึกหนี้',
   'debts.viewPay': 'ดู / ชำระ',
+  'debts.partialPay': 'ชำระบางส่วน',
+  'sales.addAsNewCustomer': 'เพิ่มเป็นลูกค้าใหม่:',
 };
 
 export default th;

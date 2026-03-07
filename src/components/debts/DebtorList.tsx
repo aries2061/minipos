@@ -12,6 +12,7 @@ interface SaleWithItems {
   totalAmount: number;
   debtorName: string | null;
   isPaid: boolean;
+  paidAmount: number;
   paidAt: Date | null;
   createdAt: Date;
   items: {

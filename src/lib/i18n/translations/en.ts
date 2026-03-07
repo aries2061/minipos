@@ -184,6 +184,8 @@ const en = {
   'debts.selectCustomer': 'Select customer',
   'debts.noDebts': 'No debt records found.',
   'debts.viewPay': 'View / Pay',
+  'debts.partialPay': 'Partial Pay',
+  'sales.addAsNewCustomer': 'Add as new customer:',
 } as const;
 
 export type TranslationKey = keyof typeof en;

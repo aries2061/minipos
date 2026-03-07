@@ -113,6 +113,7 @@ model Sale {
   isDebt      Boolean    @default(false)
   debtorName  String?
   isPaid      Boolean    @default(false)
+  paidAmount  Float      @default(0)
   paidAt      DateTime?
   createdAt   DateTime   @default(now())
   items       SaleItem[]

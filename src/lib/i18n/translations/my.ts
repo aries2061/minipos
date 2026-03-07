@@ -59,7 +59,7 @@ const my: Record<string, string> = {
   'table.items': 'ပစ္စည်းများ',
   'table.total': 'စုစုပေါင်း',
   'table.payment': 'ငွေပေးချေမှု',
-  'table.debtor': 'အကြွေးရှင်',
+  'table.debtor': 'အကြွေးယူသူ',
   'table.status': 'အခြေအနေ',
   'table.noData': 'ဒေတာမတွေ့ပါ။',
 
@@ -72,9 +72,9 @@ const my: Record<string, string> = {
 
   // Sales / POS
   'sales.title': 'အရောင်းစနစ်',
-  'sales.recentSales': 'မကြာသေးမီရောင်းချမှုများ',
+  'sales.recentSales': 'မကြာသေးမီကရောင်းချရမှုများ',
   'sales.searchItems': 'ပစ္စည်းရှာဖွေရန်...',
-  'sales.stock': 'စတော့',
+  'sales.stock': 'ပစ္စည်းပမာဏ',
   'sales.cart': 'စျေးခြင်း',
   'sales.items': 'ခု',
   'sales.emptyCart': 'ပစ္စည်းများကိုနှိပ်၍ထည့်ပါ',
@@ -84,9 +84,9 @@ const my: Record<string, string> = {
   'sales.cash': 'လက်ငင်း',
   'sales.digital': 'ဒစ်ဂျစ်တယ်',
   'sales.debt': 'အကြွေး',
-  'sales.debtorName': 'အကြွေးရှင်အမည် *',
-  'sales.enterDebtorName': 'အကြွေးရှင်အမည်ထည့်ပါ',
-  'sales.debtorRequired': 'အကြွေးရှင်အမည်ထည့်ပါ',
+  'sales.debtorName': 'အကြွေးယူသူအမည် *',
+  'sales.enterDebtorName': 'အကြွေးယူသူအမည်ထည့်ပါ',
+  'sales.debtorRequired': 'အကြွေးယူသူအမည်ထည့်ပါ',
   'sales.success': 'ရောင်းချမှုမှတ်တမ်းတင်ပြီးပါပြီ!',
   'sales.completeSale': 'ရောင်းချမှုပြီးစီးရန်',
   'sales.emptyMessage': 'ရောင်းချမှုမရှိသေးပါ။',
@@ -140,7 +140,7 @@ const my: Record<string, string> = {
   'nav.settings': 'ဆက်တင်',
   'settings.title': 'ဆက်တင်',
   'settings.language': 'မူရင်းဘာသာစကား',
-  'settings.languageDesc': 'ဆိုက်၏မူရင်းဘာသာစကားသတ်မှတ်ရန်',
+  'settings.languageDesc': 'App၏မူရင်းဘာသာစကားသတ်မှတ်ရန်',
   'settings.currency': 'ငွေကြေးအမျိုးအစား',
   'settings.currencyDesc': 'ဈေးနှုန်းများအတွက်မူရင်းငွေကြေးသတ်မှတ်ရန်',
   'settings.theme': 'အရောင်အသွေး',
@@ -152,16 +152,16 @@ const my: Record<string, string> = {
   'settings.resetTheme': 'မူရင်းသို့ပြန်ရန်',
 
   // Stock History
-  'inventory.stockHistory': 'စတော့မှတ်တမ်း',
+  'inventory.stockHistory': 'ပစ္စည်းပမာဏမှတ်တမ်း',
   'inventory.restock': 'ပြန်ဖြည့်ရန်',
   'inventory.restockQuantity': 'အရေအတွက်',
   'inventory.restockNote': 'မှတ်ချက် (ရွေးချယ်ခွင့်)',
-  'inventory.initialStock': 'ကနဦးစတော့',
+  'inventory.initialStock': 'ကနဦး ပစ္စည်းပမာဏ',
   'inventory.saleDeduction': 'ရောင်းချမှု',
   'inventory.restockLabel': 'ပြန်ဖြည့်',
-  'inventory.noLogs': 'စတော့မှတ်တမ်းမရှိသေးပါ',
-  'analytics.stockActivity': 'စတော့လှုပ်ရှားမှု',
-  'analytics.noStockActivity': 'ဤကာလအတွက်စတော့လှုပ်ရှားမှုမရှိပါ',
+  'inventory.noLogs': 'ပစ္စည်းပမာဏ မှတ်တမ်းမရှိသေးပါ',
+  'analytics.stockActivity': 'ပစ္စည်းပမာဏနှင့်ပတ်သတ်သည့် လုပ်ဆောင်မှု',
+  'analytics.noStockActivity': 'ဤကာလအတွက် ပစ္စည်းပမာဏနှင့်ပတ်သတ်သည့် လုပ်ဆောင်မှုမရှိပါ',
 
   // Debt Records
   'debts.debtRecords': 'အကြွေးမှတ်တမ်း',
@@ -184,6 +184,8 @@ const my: Record<string, string> = {
   'debts.selectCustomer': 'ဝယ်သူရွေးချယ်ရန်',
   'debts.noDebts': 'အကြွေးမှတ်တမ်းမတွေ့ပါ။',
   'debts.viewPay': 'ကြည့်ရန် / ပေးရန်',
+  'debts.partialPay': 'တစ်စိတ်တစ်ပိုင်းပေးရန်',
+  'sales.addAsNewCustomer': 'ဝယ်သူအသစ်အဖြစ်ထည့်ရန်:',
 };
 
 export default my;

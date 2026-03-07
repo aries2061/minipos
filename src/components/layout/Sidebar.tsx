@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, VStack, Text, Flex, Icon } from '@chakra-ui/react';
+import { Box, VStack, Text, Flex, Icon, Image } from '@chakra-ui/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiPackage, FiShoppingCart, FiBarChart2, FiDollarSign, FiUsers, FiSettings } from 'react-icons/fi';
@@ -34,9 +34,10 @@ export default function Sidebar() {
       left={0}
       top={0}
     >
-      <Text fontSize="xl" fontWeight="bold" mb={8} px={3}>
-        MiniPOS
-      </Text>
+      <Flex align="center" gap={2} mb={8} px={3}>
+        <Image src="/logo.jpeg" alt="MiniPOS" boxSize="36px" borderRadius="md" />
+        <Text fontSize="xl" fontWeight="bold">MiniPOS</Text>
+      </Flex>
       <VStack gap={1} align="stretch">
         {navItems.map((item) => {
           const isActive = pathname === item.href;

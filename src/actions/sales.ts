@@ -15,6 +15,18 @@ export async function createSale(payload: SalePayload) {
       }
     }
 
+    // Auto-create customer if debt mode and name doesn't match existing
+    if (payload.paymentMode === 'debt' && payload.debtorName) {
+      const existingCustomer = await tx.customer.findFirst({
+        where: { name: { equals: payload.debtorName, mode: 'insensitive' } },
+      });
+      if (!existingCustomer) {
+        await tx.customer.create({
+          data: { name: payload.debtorName },
+        });
+      }
+    }
+
     // Create sale record
     const sale = await tx.sale.create({
       data: {
