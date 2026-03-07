@@ -150,6 +150,18 @@ const en = {
   'settings.textColor': 'Text Color',
   'settings.saved': 'Settings saved',
   'settings.resetTheme': 'Reset to Default',
+
+  // Stock History
+  'inventory.stockHistory': 'Stock History',
+  'inventory.restock': 'Restock',
+  'inventory.restockQuantity': 'Quantity',
+  'inventory.restockNote': 'Note (optional)',
+  'inventory.initialStock': 'Initial Stock',
+  'inventory.saleDeduction': 'Sale',
+  'inventory.restockLabel': 'Restock',
+  'inventory.noLogs': 'No stock history yet',
+  'analytics.stockActivity': 'Stock Activity',
+  'analytics.noStockActivity': 'No stock activity for this period',
 } as const;
 
 export type TranslationKey = keyof typeof en;

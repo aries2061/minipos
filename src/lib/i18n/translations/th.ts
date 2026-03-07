@@ -150,6 +150,18 @@ const th: Record<string, string> = {
   'settings.textColor': 'สีตัวอักษร',
   'settings.saved': 'บันทึกการตั้งค่าแล้ว',
   'settings.resetTheme': 'รีเซ็ตเป็นค่าเริ่มต้น',
+
+  // Stock History
+  'inventory.stockHistory': 'ประวัติสต็อก',
+  'inventory.restock': 'เติมสต็อก',
+  'inventory.restockQuantity': 'จำนวน',
+  'inventory.restockNote': 'หมายเหตุ (ไม่บังคับ)',
+  'inventory.initialStock': 'สต็อกเริ่มต้น',
+  'inventory.saleDeduction': 'การขาย',
+  'inventory.restockLabel': 'เติมสต็อก',
+  'inventory.noLogs': 'ยังไม่มีประวัติสต็อก',
+  'analytics.stockActivity': 'กิจกรรมสต็อก',
+  'analytics.noStockActivity': 'ไม่มีกิจกรรมสต็อกในช่วงนี้',
 };
 
 export default th;

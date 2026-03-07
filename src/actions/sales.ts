@@ -36,11 +36,19 @@ export async function createSale(payload: SalePayload) {
       include: { items: true },
     });
 
-    // Decrement stock
+    // Decrement stock and log
     for (const item of payload.items) {
       await tx.item.update({
         where: { id: item.itemId },
         data: { stock: { decrement: item.quantity } },
+      });
+      await tx.stockLog.create({
+        data: {
+          itemId: item.itemId,
+          type: 'SALE',
+          quantity: -item.quantity,
+          note: `Sale #${sale.id}`,
+        },
       });
     }
 

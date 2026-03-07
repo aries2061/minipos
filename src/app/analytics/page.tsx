@@ -9,6 +9,8 @@ import { endOfDay, startOfDay } from 'date-fns';
 import DateRangeFilter from '@/components/analytics/DateRangeFilter';
 import RevenueChart from '@/components/analytics/RevenueChart';
 import PopularItems from '@/components/analytics/PopularItems';
+import StockActivity from '@/components/analytics/StockActivity';
+import { getStockActivity } from '@/actions/stockLogs';
 import type { PopularItem } from '@/types';
 
 interface Props {
@@ -45,6 +47,8 @@ async function AnalyticsData({ from, to }: { from: Date; to: Date }) {
     .sort((a, b) => b.totalQuantity - a.totalQuantity)
     .slice(0, 10);
 
+  const stockLogs = await getStockActivity(from, to);
+
   return (
     <VStack gap={6} align="stretch">
       <RevenueChart
@@ -54,6 +58,7 @@ async function AnalyticsData({ from, to }: { from: Date; to: Date }) {
         costTotal={costTotal}
       />
       <PopularItems items={popularItems} />
+      <StockActivity logs={stockLogs} />
     </VStack>
   );
 }

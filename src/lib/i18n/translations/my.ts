@@ -150,6 +150,18 @@ const my: Record<string, string> = {
   'settings.textColor': 'စာသားအရောင်',
   'settings.saved': 'ဆက်တင်သိမ်းပြီး',
   'settings.resetTheme': 'မူရင်းသို့ပြန်ရန်',
+
+  // Stock History
+  'inventory.stockHistory': 'စတော့မှတ်တမ်း',
+  'inventory.restock': 'ပြန်ဖြည့်ရန်',
+  'inventory.restockQuantity': 'အရေအတွက်',
+  'inventory.restockNote': 'မှတ်ချက် (ရွေးချယ်ခွင့်)',
+  'inventory.initialStock': 'ကနဦးစတော့',
+  'inventory.saleDeduction': 'ရောင်းချမှု',
+  'inventory.restockLabel': 'ပြန်ဖြည့်',
+  'inventory.noLogs': 'စတော့မှတ်တမ်းမရှိသေးပါ',
+  'analytics.stockActivity': 'စတော့လှုပ်ရှားမှု',
+  'analytics.noStockActivity': 'ဤကာလအတွက်စတော့လှုပ်ရှားမှုမရှိပါ',
 };
 
 export default my;

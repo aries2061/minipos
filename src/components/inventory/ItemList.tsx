@@ -5,9 +5,12 @@ import { Box, Button, HStack, Badge } from '@chakra-ui/react';
 import { Item } from '@prisma/client';
 import DataTable from '@/components/ui/DataTable';
 import ItemForm from './ItemForm';
+import StockHistory from './StockHistory';
 import { deleteItem } from '@/actions/inventory';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
+import { useSettings } from '@/lib/settings';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface ItemListProps {
   items: Item[];
@@ -16,18 +19,20 @@ interface ItemListProps {
 export default function ItemList({ items }: ItemListProps) {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
   const { t } = useTranslation();
+  const { settings } = useSettings();
 
   const columns = [
     { header: t('table.name'), accessor: 'name' as const },
     { header: t('table.category'), accessor: 'category' as const },
     {
       header: t('table.cost'),
-      accessor: (row: Item) => formatCurrency(row.costPrice),
+      accessor: (row: Item) => formatCurrency(row.costPrice, settings.currency),
     },
     {
       header: t('table.salePrice'),
-      accessor: (row: Item) => formatCurrency(row.salePrice),
+      accessor: (row: Item) => formatCurrency(row.salePrice, settings.currency),
     },
     {
       header: t('table.stock'),
@@ -42,6 +47,14 @@ export default function ItemList({ items }: ItemListProps) {
       header: t('table.actions'),
       accessor: (row: Item) => (
         <HStack gap={2}>
+          <Button
+            size="xs"
+            variant="outline"
+            colorScheme="teal"
+            onClick={() => setExpandedItemId(expandedItemId === row.id ? null : row.id)}
+          >
+            {t('inventory.stockHistory' as TranslationKey)}
+          </Button>
           <Button
             size="xs"
             variant="outline"
@@ -90,6 +103,15 @@ export default function ItemList({ items }: ItemListProps) {
         </Box>
       )}
       <DataTable columns={columns} data={items} emptyMessage={t('inventory.emptyMessage')} />
+      {expandedItemId && (() => {
+        const item = items.find((i) => i.id === expandedItemId);
+        if (!item) return null;
+        return (
+          <Box mt={4} p={4} bg="white" borderRadius="lg" border="1px solid" borderColor="gray.200">
+            <StockHistory itemId={item.id} itemName={item.name} />
+          </Box>
+        );
+      })()}
     </Box>
   );
 }

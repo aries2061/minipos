@@ -13,7 +13,17 @@ interface ItemInput {
 }
 
 export async function createItem(data: ItemInput) {
-  const item = await prisma.item.create({ data });
+  const item = await prisma.$transaction(async (tx) => {
+    const created = await tx.item.create({ data });
+    await tx.stockLog.create({
+      data: {
+        itemId: created.id,
+        type: 'INITIAL',
+        quantity: data.stock,
+      },
+    });
+    return created;
+  });
   revalidatePath('/inventory');
   return item;
 }
