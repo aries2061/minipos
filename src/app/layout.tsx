@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Providers } from './providers';
 import Sidebar from '@/components/layout/Sidebar';
 import Navbar from '@/components/layout/Navbar';
+import ResponsiveMain from '@/components/layout/ResponsiveMain';
 import { Box, Flex } from '@chakra-ui/react';
 
 export const metadata: Metadata = {
@@ -19,12 +20,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Flex minH="100vh">
             <Sidebar />
-            <Box ml="240px" flex={1} bg="gray.50" minH="100vh">
+            <ResponsiveMain>
               <Navbar />
-              <Box as="main" p={6}>
+              <Box as="main" p={{ base: 3, md: 4, lg: 6 }}>
                 {children}
               </Box>
-            </Box>
+            </ResponsiveMain>
           </Flex>
         </Providers>
       </body>
