@@ -7,6 +7,9 @@ import { Box, Flex } from '@chakra-ui/react';
 export const metadata: Metadata = {
   title: 'MiniPOS - Mini Store Point of Sale',
   description: 'A mini store POS system for inventory, sales, and debt management',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
