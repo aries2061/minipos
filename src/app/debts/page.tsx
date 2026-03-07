@@ -3,18 +3,30 @@ export const dynamic = 'force-dynamic';
 import { Suspense } from 'react';
 import { VStack } from '@chakra-ui/react';
 import { getDebtors } from '@/actions/debts';
+import { getDebts } from '@/actions/debtRecords';
 import SearchInput from '@/components/ui/SearchInput';
 import TableSkeleton from '@/components/ui/TableSkeleton';
 import DebtorList from '@/components/debts/DebtorList';
+import DebtRecordList from '@/components/debts/DebtRecordList';
+import DebtTabs from '@/components/debts/DebtTabs';
 import PageHeader from '@/components/ui/PageHeader';
 
 interface Props {
   searchParams: Promise<{ q?: string }>;
 }
 
-async function DebtorListWrapper({ search }: { search?: string }) {
-  const debtors = await getDebtors(search);
-  return <DebtorList debtors={debtors} />;
+async function DebtContent({ search }: { search?: string }) {
+  const [debtors, debtRecords] = await Promise.all([
+    getDebtors(search),
+    getDebts(search),
+  ]);
+
+  return (
+    <DebtTabs
+      saleDebtsContent={<DebtorList debtors={debtors} />}
+      debtRecordsContent={<DebtRecordList initialDebts={debtRecords} search={search} />}
+    />
+  );
 }
 
 export default async function DebtsPage({ searchParams }: Props) {
@@ -25,7 +37,7 @@ export default async function DebtsPage({ searchParams }: Props) {
       <PageHeader titleKey="debts.title" />
       <SearchInput placeholderKey="debts.searchPlaceholder" />
       <Suspense fallback={<TableSkeleton rows={6} columns={5} />}>
-        <DebtorListWrapper search={params.q} />
+        <DebtContent search={params.q} />
       </Suspense>
     </VStack>
   );

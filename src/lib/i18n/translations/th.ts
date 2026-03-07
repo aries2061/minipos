@@ -162,6 +162,28 @@ const th: Record<string, string> = {
   'inventory.noLogs': 'ยังไม่มีประวัติสต็อก',
   'analytics.stockActivity': 'กิจกรรมสต็อก',
   'analytics.noStockActivity': 'ไม่มีกิจกรรมสต็อกในช่วงนี้',
+
+  // Debt Records
+  'debts.debtRecords': 'บันทึกหนี้',
+  'debts.saleDebts': 'หนี้จากการขาย',
+  'debts.addDebt': '+ เพิ่มหนี้',
+  'debts.customer': 'ลูกค้า',
+  'debts.amount': 'จำนวนเงิน',
+  'debts.balance': 'ยอมคงเหลือ',
+  'debts.note': 'หมายเหตุ',
+  'debts.active': 'ค้างชำระ',
+  'debts.recordPayment': 'บันทึกการชำระ',
+  'debts.paymentAmount': 'จำนวนเงินที่ชำระ',
+  'debts.paymentNote': 'หมายเหตุ (ไม่บังคับ)',
+  'debts.paymentHistory': 'ประวัติการชำระ',
+  'debts.originalAmount': 'จำนวนเงินเดิม',
+  'debts.remaining': 'คงเหลือ',
+  'debts.fullyPaid': 'ชำระครบแล้ว',
+  'debts.deleteDebt': 'ลบ',
+  'debts.deleteDebtConfirm': 'ลบบันทึกหนี้นี้?',
+  'debts.selectCustomer': 'เลือกลูกค้า',
+  'debts.noDebts': 'ไม่พบบันทึกหนี้',
+  'debts.viewPay': 'ดู / ชำระ',
 };
 
 export default th;

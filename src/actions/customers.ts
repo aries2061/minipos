@@ -40,3 +40,10 @@ export async function getCustomers(search?: string) {
     orderBy: { createdAt: 'desc' },
   });
 }
+
+export async function getCustomersList() {
+  return prisma.customer.findMany({
+    select: { id: true, name: true, phone: true },
+    orderBy: { name: 'asc' },
+  });
+}

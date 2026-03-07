@@ -162,6 +162,28 @@ const en = {
   'inventory.noLogs': 'No stock history yet',
   'analytics.stockActivity': 'Stock Activity',
   'analytics.noStockActivity': 'No stock activity for this period',
+
+  // Debt Records
+  'debts.debtRecords': 'Debt Records',
+  'debts.saleDebts': 'Sale Debts',
+  'debts.addDebt': '+ Add Debt',
+  'debts.customer': 'Customer',
+  'debts.amount': 'Amount',
+  'debts.balance': 'Balance',
+  'debts.note': 'Note',
+  'debts.active': 'Active',
+  'debts.recordPayment': 'Record Payment',
+  'debts.paymentAmount': 'Payment Amount',
+  'debts.paymentNote': 'Note (optional)',
+  'debts.paymentHistory': 'Payment History',
+  'debts.originalAmount': 'Original Amount',
+  'debts.remaining': 'Remaining',
+  'debts.fullyPaid': 'Fully Paid',
+  'debts.deleteDebt': 'Delete',
+  'debts.deleteDebtConfirm': 'Delete this debt record?',
+  'debts.selectCustomer': 'Select customer',
+  'debts.noDebts': 'No debt records found.',
+  'debts.viewPay': 'View / Pay',
 } as const;
 
 export type TranslationKey = keyof typeof en;

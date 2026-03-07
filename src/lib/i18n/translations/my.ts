@@ -162,6 +162,28 @@ const my: Record<string, string> = {
   'inventory.noLogs': 'စတော့မှတ်တမ်းမရှိသေးပါ',
   'analytics.stockActivity': 'စတော့လှုပ်ရှားမှု',
   'analytics.noStockActivity': 'ဤကာလအတွက်စတော့လှုပ်ရှားမှုမရှိပါ',
+
+  // Debt Records
+  'debts.debtRecords': 'အကြွေးမှတ်တမ်း',
+  'debts.saleDebts': 'ရောင်းချအကြွေး',
+  'debts.addDebt': '+ အကြွေးထည့်ရန်',
+  'debts.customer': 'ဝယ်သူ',
+  'debts.amount': 'ပမာဏ',
+  'debts.balance': 'လက်ကျန်',
+  'debts.note': 'မှတ်ချက်',
+  'debts.active': 'လက်ရှိ',
+  'debts.recordPayment': 'ငွေပေးချေမှုမှတ်ရန်',
+  'debts.paymentAmount': 'ပေးချေငွေပမာဏ',
+  'debts.paymentNote': 'မှတ်ချက် (ရွေးချယ်ခွင့်)',
+  'debts.paymentHistory': 'ငွေပေးချေမှုမှတ်တမ်း',
+  'debts.originalAmount': 'မူရင်းပမာဏ',
+  'debts.remaining': 'ကျန်ရှိ',
+  'debts.fullyPaid': 'အပြည့်ပေးပြီး',
+  'debts.deleteDebt': 'ဖျက်ရန်',
+  'debts.deleteDebtConfirm': 'ဤအကြွေးမှတ်တမ်းကိုဖျက်မလား?',
+  'debts.selectCustomer': 'ဝယ်သူရွေးချယ်ရန်',
+  'debts.noDebts': 'အကြွေးမှတ်တမ်းမတွေ့ပါ။',
+  'debts.viewPay': 'ကြည့်ရန် / ပေးရန်',
 };
 
 export default my;
