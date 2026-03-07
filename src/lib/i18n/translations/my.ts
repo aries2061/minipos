@@ -186,6 +186,20 @@ const my: Record<string, string> = {
   'debts.viewPay': 'ကြည့်ရန် / ပေးရန်',
   'debts.partialPay': 'တစ်စိတ်တစ်ပိုင်းပေးရန်',
   'sales.addAsNewCustomer': 'ဝယ်သူအသစ်အဖြစ်ထည့်ရန်:',
+  'sales.allItems': 'အားလုံး',
+
+  // Categories
+  'inventory.categories': 'အမျိုးအစားများ',
+  'inventory.addCategory': '+ အမျိုးအစားထည့်ရန်',
+  'inventory.editCategory': 'အမျိုးအစားပြင်ဆင်ရန်',
+  'inventory.categoryName': 'အမျိုးအစားအမည်',
+  'inventory.categoryIcon': 'အမျိုးအစားအိုင်ကွန်',
+  'inventory.searchIcon': 'အိုင်ကွန်ရှာဖွေရန်...',
+  'inventory.deleteCategory': 'ဖျက်ရန်',
+  'inventory.deleteCategoryConfirm': 'ဤအမျိုးအစားကိုဖျက်မလား?',
+  'inventory.categoryInUse': 'ပစ္စည်းများနှင့်ချိတ်ဆက်ထားသောအမျိုးအစားကိုဖျက်၍မရပါ။',
+  'inventory.noCategories': 'အမျိုးအစားမရှိသေးပါ။',
+  'inventory.addNewCategory': 'အမျိုးအစားအသစ်အဖြစ်ထည့်ရန်:',
 };
 
 export default my;

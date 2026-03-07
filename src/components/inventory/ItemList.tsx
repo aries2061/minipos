@@ -1,31 +1,61 @@
 'use client';
 
 import { useState } from 'react';
-import { Box, Button, HStack, Badge } from '@chakra-ui/react';
+import { Box, Button, HStack, Badge, Icon, Text, Flex } from '@chakra-ui/react';
 import { Item } from '@prisma/client';
 import DataTable from '@/components/ui/DataTable';
 import ItemForm from './ItemForm';
 import StockHistory from './StockHistory';
+import CategoryList from './CategoryList';
+import { iconMap } from './IconPicker';
 import { deleteItem } from '@/actions/inventory';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
 import { useSettings } from '@/lib/settings';
 import type { TranslationKey } from '@/lib/i18n/translations/en';
 
-interface ItemListProps {
-  items: Item[];
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  _count: { items: number };
 }
 
-export default function ItemList({ items }: ItemListProps) {
+interface ItemListProps {
+  items: Item[];
+  categories: Category[];
+}
+
+export default function ItemList({ items, categories }: ItemListProps) {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
   const { t } = useTranslation();
   const { settings } = useSettings();
 
+  const categoryOptions = categories.map((c) => ({ id: c.id, name: c.name, icon: c.icon }));
+
+  const getCategoryIcon = (categoryName: string) => {
+    const cat = categories.find((c) => c.name === categoryName);
+    if (cat && iconMap[cat.icon]) return iconMap[cat.icon];
+    return null;
+  };
+
   const columns = [
     { header: t('table.name'), accessor: 'name' as const },
-    { header: t('table.category'), accessor: 'category' as const },
+    {
+      header: t('table.category'),
+      accessor: (row: Item) => {
+        const IconComp = getCategoryIcon(row.category);
+        return (
+          <HStack gap={1}>
+            {IconComp && <Icon as={IconComp} boxSize={4} color="blue.500" />}
+            <Text fontSize="sm">{row.category}</Text>
+          </HStack>
+        );
+      },
+    },
     {
       header: t('table.cost'),
       accessor: (row: Item) => formatCurrency(row.costPrice, settings.currency),
@@ -88,6 +118,7 @@ export default function ItemList({ items }: ItemListProps) {
         <Box mb={4}>
           <ItemForm
             item={editingItem || undefined}
+            categories={categoryOptions}
             onClose={() => {
               setShowForm(false);
               setEditingItem(null);
@@ -96,10 +127,23 @@ export default function ItemList({ items }: ItemListProps) {
         </Box>
       )}
       {!showForm && (
-        <Box mb={4}>
+        <Flex mb={4} gap={2}>
           <Button size="sm" colorScheme="blue" onClick={() => setShowForm(true)}>
             {t('inventory.addItem')}
           </Button>
+          <Button
+            size="sm"
+            variant={showCategories ? 'solid' : 'outline'}
+            colorScheme="teal"
+            onClick={() => setShowCategories(!showCategories)}
+          >
+            {t('inventory.categories' as TranslationKey)}
+          </Button>
+        </Flex>
+      )}
+      {showCategories && !showForm && (
+        <Box mb={4} p={4} bg="gray.50" borderRadius="lg">
+          <CategoryList categories={categories} />
         </Box>
       )}
       <DataTable columns={columns} data={items} emptyMessage={t('inventory.emptyMessage')} />

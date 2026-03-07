@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import { Suspense } from 'react';
 import { VStack, HStack } from '@chakra-ui/react';
 import { getItems } from '@/actions/inventory';
+import { getCategories } from '@/actions/categories';
 import SearchInput from '@/components/ui/SearchInput';
 import TableSkeleton from '@/components/ui/TableSkeleton';
 import ItemList from '@/components/inventory/ItemList';
@@ -13,8 +14,11 @@ interface Props {
 }
 
 async function ItemListWrapper({ search, lowStock }: { search?: string; lowStock?: boolean }) {
-  const items = await getItems(search, lowStock);
-  return <ItemList items={items} />;
+  const [items, categories] = await Promise.all([
+    getItems(search, lowStock),
+    getCategories(),
+  ]);
+  return <ItemList items={items} categories={categories} />;
 }
 
 export default async function InventoryPage({ searchParams }: Props) {

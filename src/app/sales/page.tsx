@@ -10,7 +10,7 @@ import PageHeader from '@/components/ui/PageHeader';
 import TranslatedText from '@/components/ui/TranslatedText';
 
 async function POSSection() {
-  const [items, customers] = await Promise.all([
+  const [items, customers, categories] = await Promise.all([
     prisma.item.findMany({
       where: { stock: { gt: 0 } },
       orderBy: { name: 'asc' },
@@ -19,8 +19,12 @@ async function POSSection() {
       select: { id: true, name: true, phone: true },
       orderBy: { name: 'asc' },
     }),
+    prisma.category.findMany({
+      select: { id: true, name: true, icon: true },
+      orderBy: { name: 'asc' },
+    }),
   ]);
-  return <Cart items={items} customers={customers} />;
+  return <Cart items={items} customers={customers} categories={categories} />;
 }
 
 async function RecentSalesSection() {

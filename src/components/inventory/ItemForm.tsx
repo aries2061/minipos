@@ -1,9 +1,16 @@
 'use client';
 
 import { Box, Button, Input, VStack, HStack, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { createItem, updateItem } from '@/actions/inventory';
 import { useTranslation } from '@/lib/i18n';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
+
+interface CategoryOption {
+  id: string;
+  name: string;
+  icon: string;
+}
 
 interface ItemFormProps {
   item?: {
@@ -15,13 +22,36 @@ interface ItemFormProps {
     stock: number;
     sku: string | null;
   };
+  categories: CategoryOption[];
   onClose: () => void;
 }
 
-export default function ItemForm({ item, onClose }: ItemFormProps) {
+export default function ItemForm({ item, categories, onClose }: ItemFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [categoryInput, setCategoryInput] = useState(item?.category || 'General');
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+
+  const filteredCategories = categoryInput.trim()
+    ? categories.filter((c) =>
+        c.name.toLowerCase().includes(categoryInput.toLowerCase())
+      )
+    : categories;
+
+  const isNewCategory = categoryInput.trim() &&
+    !categories.some((c) => c.name.toLowerCase() === categoryInput.trim().toLowerCase());
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -31,7 +61,7 @@ export default function ItemForm({ item, onClose }: ItemFormProps) {
     const formData = new FormData(e.currentTarget);
     const data = {
       name: formData.get('name') as string,
-      category: formData.get('category') as string,
+      category: categoryInput.trim() || 'General',
       costPrice: parseFloat(formData.get('costPrice') as string),
       salePrice: parseFloat(formData.get('salePrice') as string),
       stock: parseInt(formData.get('stock') as string),
@@ -64,9 +94,65 @@ export default function ItemForm({ item, onClose }: ItemFormProps) {
               <Text fontSize="sm" mb={1}>{t('inventory.itemName')}</Text>
               <Input name="name" defaultValue={item?.name} required size="sm" />
             </Box>
-            <Box flex={1}>
+            <Box flex={1} ref={suggestionsRef} position="relative">
               <Text fontSize="sm" mb={1}>{t('inventory.category')}</Text>
-              <Input name="category" defaultValue={item?.category || 'General'} size="sm" />
+              <Input
+                size="sm"
+                value={categoryInput}
+                onChange={(e) => {
+                  setCategoryInput(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+              />
+              {showSuggestions && (
+                <Box
+                  position="absolute"
+                  top="100%"
+                  left={0}
+                  right={0}
+                  bg="white"
+                  border="1px solid"
+                  borderColor="gray.200"
+                  borderRadius="md"
+                  boxShadow="md"
+                  zIndex={10}
+                  maxH="180px"
+                  overflowY="auto"
+                  mt={1}
+                >
+                  {filteredCategories.map((c) => (
+                    <Box
+                      key={c.id}
+                      px={3}
+                      py={2}
+                      cursor="pointer"
+                      _hover={{ bg: 'blue.50' }}
+                      onClick={() => {
+                        setCategoryInput(c.name);
+                        setShowSuggestions(false);
+                      }}
+                    >
+                      <Text fontSize="sm">{c.name}</Text>
+                    </Box>
+                  ))}
+                  {isNewCategory && (
+                    <Box
+                      px={3}
+                      py={2}
+                      cursor="pointer"
+                      _hover={{ bg: 'green.50' }}
+                      borderTop={filteredCategories.length > 0 ? '1px solid' : 'none'}
+                      borderColor="gray.100"
+                      onClick={() => setShowSuggestions(false)}
+                    >
+                      <Text fontSize="sm" color="green.600" fontWeight="medium">
+                        + {t('inventory.addNewCategory' as TranslationKey)} &quot;{categoryInput.trim()}&quot;
+                      </Text>
+                    </Box>
+                  )}
+                </Box>
+              )}
             </Box>
           </HStack>
           <HStack gap={4}>

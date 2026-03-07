@@ -1,13 +1,15 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Box, Button, VStack, HStack, Text, Input, Badge, Flex } from '@chakra-ui/react';
+import { Box, Button, VStack, HStack, Text, Input, Badge, Flex, SimpleGrid, Icon } from '@chakra-ui/react';
 import { Item } from '@prisma/client';
 import { createSale } from '@/actions/sales';
 import { formatCurrency } from '@/lib/utils';
 import { useTranslation } from '@/lib/i18n';
 import { useSettings } from '@/lib/settings';
+import { iconMap } from '@/components/inventory/IconPicker';
 import type { CartItem } from '@/types';
+import type { TranslationKey } from '@/lib/i18n/translations/en';
 
 interface Customer {
   id: string;
@@ -15,14 +17,22 @@ interface Customer {
   phone: string | null;
 }
 
+interface CategoryInfo {
+  id: string;
+  name: string;
+  icon: string;
+}
+
 interface CartProps {
   items: Item[];
   customers: Customer[];
+  categories: CategoryInfo[];
 }
 
-export default function Cart({ items, customers }: CartProps) {
+export default function Cart({ items, customers, categories }: CartProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [search, setSearch] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [paymentMode, setPaymentMode] = useState<'cash' | 'digital' | 'debt'>('cash');
   const [debtorName, setDebtorName] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -33,11 +43,13 @@ export default function Cart({ items, customers }: CartProps) {
   const { settings } = useSettings();
   const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  const filteredItems = items.filter(
-    (i) =>
+  const filteredItems = items.filter((i) => {
+    const matchesSearch = !search ||
       i.name.toLowerCase().includes(search.toLowerCase()) ||
-      i.category.toLowerCase().includes(search.toLowerCase())
-  );
+      i.category.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = !selectedCategory || i.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   const filteredCustomers = debtorName.trim()
     ? customers.filter((c) =>
@@ -48,7 +60,6 @@ export default function Cart({ items, customers }: CartProps) {
   const isNewCustomer = debtorName.trim() &&
     !customers.some((c) => c.name.toLowerCase() === debtorName.trim().toLowerCase());
 
-  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (suggestionsRef.current && !suggestionsRef.current.contains(e.target as Node)) {
@@ -130,37 +141,69 @@ export default function Cart({ items, customers }: CartProps) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size="sm"
-          mb={4}
+          mb={3}
         />
-        <VStack align="stretch" gap={2} maxH="500px" overflowY="auto">
+
+        {/* Category Filter Buttons */}
+        <Flex gap={2} mb={3} flexWrap="wrap">
+          <Button
+            size="xs"
+            variant={selectedCategory === null ? 'solid' : 'outline'}
+            colorScheme={selectedCategory === null ? 'blue' : 'gray'}
+            onClick={() => setSelectedCategory(null)}
+          >
+            {t('sales.allItems' as TranslationKey)}
+          </Button>
+          {categories.map((cat) => {
+            const IconComp = iconMap[cat.icon];
+            const isActive = selectedCategory === cat.name;
+            return (
+              <Button
+                key={cat.id}
+                size="xs"
+                variant={isActive ? 'solid' : 'outline'}
+                colorScheme={isActive ? 'blue' : 'gray'}
+                onClick={() => setSelectedCategory(isActive ? null : cat.name)}
+              >
+                <HStack gap={1}>
+                  {IconComp && <Icon as={IconComp} boxSize={3} />}
+                  <Text fontSize="xs">{cat.name}</Text>
+                </HStack>
+              </Button>
+            );
+          })}
+        </Flex>
+
+        {/* 5-Column Item Grid */}
+        <SimpleGrid columns={{ base: 2, md: 3, lg: 4, xl: 5 }} gap={2} maxH="500px" overflowY="auto">
           {filteredItems.map((item) => (
-            <Flex
+            <Box
               key={item.id}
               p={3}
               bg="white"
               borderRadius="md"
               border="1px solid"
               borderColor="gray.200"
-              justify="space-between"
-              align="center"
               cursor={item.stock > 0 ? 'pointer' : 'not-allowed'}
               opacity={item.stock > 0 ? 1 : 0.5}
-              _hover={item.stock > 0 ? { borderColor: 'blue.300' } : {}}
+              _hover={item.stock > 0 ? { borderColor: 'blue.300', bg: 'blue.50' } : {}}
               onClick={() => item.stock > 0 && addToCart(item)}
+              textAlign="center"
             >
-              <Box>
-                <Text fontSize="sm" fontWeight="medium">{item.name}</Text>
-                <Text fontSize="xs" color="gray.500">{item.category}</Text>
-              </Box>
-              <HStack gap={3}>
-                <Text fontSize="sm" fontWeight="semibold">{formatCurrency(item.salePrice, settings.currency)}</Text>
-                <Badge colorScheme={item.stock <= 5 ? 'red' : 'green'} fontSize="xs">
-                  {t('sales.stock')}: {item.stock}
-                </Badge>
-              </HStack>
-            </Flex>
+              <Text fontSize="sm" fontWeight="medium" lineClamp={2} mb={1}>{item.name}</Text>
+              <Text fontSize="sm" fontWeight="bold" color="blue.600">
+                {formatCurrency(item.salePrice, settings.currency)}
+              </Text>
+              <Badge
+                colorScheme={item.stock <= 5 ? 'red' : 'green'}
+                fontSize="xs"
+                mt={1}
+              >
+                {t('sales.stock')}: {item.stock}
+              </Badge>
+            </Box>
           ))}
-        </VStack>
+        </SimpleGrid>
       </Box>
 
       {/* Cart */}
@@ -271,7 +314,7 @@ export default function Cart({ items, customers }: CartProps) {
                       onClick={() => setShowSuggestions(false)}
                     >
                       <Text fontSize="sm" color="green.600" fontWeight="medium">
-                        + {t('sales.addAsNewCustomer' as never)} &quot;{debtorName.trim()}&quot;
+                        + {t('sales.addAsNewCustomer' as TranslationKey)} &quot;{debtorName.trim()}&quot;
                       </Text>
                     </Box>
                   )}

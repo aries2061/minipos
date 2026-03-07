@@ -186,6 +186,20 @@ const en = {
   'debts.viewPay': 'View / Pay',
   'debts.partialPay': 'Partial Pay',
   'sales.addAsNewCustomer': 'Add as new customer:',
+  'sales.allItems': 'All',
+
+  // Categories
+  'inventory.categories': 'Categories',
+  'inventory.addCategory': '+ Add Category',
+  'inventory.editCategory': 'Edit Category',
+  'inventory.categoryName': 'Category Name',
+  'inventory.categoryIcon': 'Category Icon',
+  'inventory.searchIcon': 'Search icons...',
+  'inventory.deleteCategory': 'Delete',
+  'inventory.deleteCategoryConfirm': 'Delete this category?',
+  'inventory.categoryInUse': 'Cannot delete category with linked items.',
+  'inventory.noCategories': 'No categories yet.',
+  'inventory.addNewCategory': 'Add as new category:',
 } as const;
 
 export type TranslationKey = keyof typeof en;

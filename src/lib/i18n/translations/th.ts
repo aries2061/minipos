@@ -186,6 +186,20 @@ const th: Record<string, string> = {
   'debts.viewPay': 'ดู / ชำระ',
   'debts.partialPay': 'ชำระบางส่วน',
   'sales.addAsNewCustomer': 'เพิ่มเป็นลูกค้าใหม่:',
+  'sales.allItems': 'ทั้งหมด',
+
+  // Categories
+  'inventory.categories': 'หมวดหมู่',
+  'inventory.addCategory': '+ เพิ่มหมวดหมู่',
+  'inventory.editCategory': 'แก้ไขหมวดหมู่',
+  'inventory.categoryName': 'ชื่อหมวดหมู่',
+  'inventory.categoryIcon': 'ไอคอนหมวดหมู่',
+  'inventory.searchIcon': 'ค้นหาไอคอน...',
+  'inventory.deleteCategory': 'ลบ',
+  'inventory.deleteCategoryConfirm': 'ลบหมวดหมู่นี้?',
+  'inventory.categoryInUse': 'ไม่สามารถลบหมวดหมู่ที่มีสินค้าเชื่อมอยู่ได้',
+  'inventory.noCategories': 'ยังไม่มีหมวดหมู่',
+  'inventory.addNewCategory': 'เพิ่มเป็นหมวดหมู่ใหม่:',
 };
 
 export default th;

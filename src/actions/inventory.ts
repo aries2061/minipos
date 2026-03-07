@@ -12,9 +12,25 @@ interface ItemInput {
   sku?: string;
 }
 
+async function ensureCategoryLink(categoryName: string): Promise<string | null> {
+  if (!categoryName) return null;
+  const existing = await prisma.category.findUnique({ where: { name: categoryName } });
+  if (existing) return existing.id;
+
+  const created = await prisma.category.create({ data: { name: categoryName } });
+  return created.id;
+}
+
 export async function createItem(data: ItemInput) {
+  const categoryId = await ensureCategoryLink(data.category);
+
   const item = await prisma.$transaction(async (tx) => {
-    const created = await tx.item.create({ data });
+    const created = await tx.item.create({
+      data: {
+        ...data,
+        categoryId,
+      },
+    });
     await tx.stockLog.create({
       data: {
         itemId: created.id,
@@ -25,12 +41,25 @@ export async function createItem(data: ItemInput) {
     return created;
   });
   revalidatePath('/inventory');
+  revalidatePath('/sales');
   return item;
 }
 
 export async function updateItem(id: string, data: Partial<ItemInput>) {
-  const item = await prisma.item.update({ where: { id }, data });
+  let categoryId: string | null | undefined;
+  if (data.category) {
+    categoryId = await ensureCategoryLink(data.category);
+  }
+
+  const item = await prisma.item.update({
+    where: { id },
+    data: {
+      ...data,
+      ...(categoryId !== undefined ? { categoryId } : {}),
+    },
+  });
   revalidatePath('/inventory');
+  revalidatePath('/sales');
   return item;
 }
 
